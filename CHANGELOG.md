@@ -11,10 +11,34 @@
 
 ## Breaking changes
 
+_Codemods for migration of most of these are available below this section._
+
 - Remove `reason-promise`. We're waiting for the official new Promise bindings, but since they seem to be quite far away, we'll have to revert back to stock `Js.Promise` for now. This is because `reason-promise` clashes with other Promise bindings that people might want to use before the new official ones are actually shipped.
 - `ReactExperimental.unstable_useTransition` is now called `ReactExperimental.useTransition`, and the order of the tuple that's returned has been reversed to align with the underlying API. This means that what was before `let (startTransition, isTransitioning) = ReactExperimental.unstable_useTransition()` is now `let (isTransitioning, startTransition) = ReactExperimental.useTransition()`.
 - `ReactExperimental.unstable_useDeferredValue` is now called `ReactExperimental.useDeferredValue`.
 - `ReactExperimental.renderConcurrentRootAtElementWithId` has moved to `ReactDOMExperimental`: `ReactDOMExperimental.renderConcurrentRootAtElementWithId`.
+
+## Codemods for migrating the breaking changes
+
+Run the following [Comby](https://comby.dev) commands in your repository to migrate the breaking changes:
+
+Migrate `unstable_useTransition`:
+
+```
+comby 'let (:[1], :[2]) = ReactExperimental.unstable_useTransition()' 'let (:[2], :[1]) = ReactExperimental.useTransition()' .res -matcher .re -exclude-dir node_modules -review
+```
+
+Migrate `unstable_useDeferredValue`:
+
+```
+comby 'ReactExperimental.unstable_useDeferredValue(:[1])' 'ReactExperimental.useDeferredValue(:[1])' .res -matcher .re -exclude-dir node_modules -review
+```
+
+Migrate `renderConcurrentRootAtElementWithId`:
+
+```
+comby 'ReactExperimental.renderConcurrentRootAtElementWithId' 'ReactDOMExperimental.renderConcurrentRootAtElementWithId' .res -matcher .re -exclude-dir node_modules -review
+```
 
 # 0.22.0
 

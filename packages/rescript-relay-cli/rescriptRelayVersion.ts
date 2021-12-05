@@ -1,0 +1,1 @@
+export const currentRescriptRelayVersion = "0.23.0";

@@ -23,8 +23,9 @@
     "typescript": "4.3.4"
   },
   "scripts": {
-    "build": "ncc build index.ts -o dist -m",
-    "build:dev": "ncc build index.ts -o dist",
+    "persist-version": "node scripts/writeCurrentRescriptRelayVersion.js",
+    "build": "yarn persist-version && ncc build index.ts -o dist -m",
+    "build:dev": "yarn persist-version && ncc build index.ts -o dist",
     "test": "jest"
   }
 }
