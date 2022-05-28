@@ -810,7 +810,6 @@ module Environment: {
     ~treatMissingFieldsAsNull: bool=?,
     ~missingFieldHandlers: array<MissingFieldHandler.t>=?,
     ~requiredFieldLogger: RequiredFieldLogger.t=?,
-    ~isServer: bool=?,
     unit,
   ) => t
 
