@@ -2,9 +2,8 @@
   "name": "rescript-relay",
   "version": "0.1.0",
   "namespace": false,
-  "jsx": {
-    "mode": "automatic",
-    "version": 4
+  "reason": {
+    "react-jsx": 3
   },
   "sources": [
     {

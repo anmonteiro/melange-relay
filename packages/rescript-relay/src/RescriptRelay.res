@@ -662,7 +662,10 @@ module Context = {
     @react.component
     let make = (~environment: Environment.t, ~children) => {
       let provider = React.Context.provider(context)
-      React.createElement(provider, {value: Some({"environment": environment}), children})
+      React.createElement(
+        provider,
+        {"value": Some({"environment": environment}), "children": children},
+      )
     }
   }
 }
