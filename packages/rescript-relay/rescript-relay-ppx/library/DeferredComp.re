@@ -23,8 +23,8 @@ let lazyExtension =
       let realLoc = loc;
       let loc = Ppxlib.Location.none
 
-      let moduleIdentExported =
-        Ppxlib.Ast_helper.Mod.ident(~loc, {txt: Ldot(Lident(moduleName), "ExportedForDynamicImport__"), loc});
+      let moduleIdent =
+        Ppxlib.Ast_helper.Mod.ident(~loc, {txt: Lident(moduleName), loc});
       
       let moduleIdentWithCorrectLoc =
         Ppxlib.Ast_helper.Mod.ident(~loc, {txt: Lident(moduleName), loc: realLoc});
@@ -40,7 +40,7 @@ let lazyExtension =
           // definition, hover etc all point to the dynamically imported module
           // rather than what the PPX produces.
           [%stri module M = [%m moduleIdentWithCorrectLoc]],
-          [%stri module type T = (module type of [%m moduleIdentExported])],
+          [%stri module type T = (module type of [%m moduleIdent])],
           [%stri
             [@val]
             external import_:
@@ -81,6 +81,9 @@ let lazyExtension =
               })
             }
           ],
+          [%stri let%private unsafePlaceholder: module T = [%raw {|{}|}]],
+          [%stri module UnsafePlaceholder = (val unsafePlaceholder)],
+          [%stri let makeProps = UnsafePlaceholder.makeProps],
           [%stri let component =  lazy_(loadReactComponent)],
           [%stri let make = (props) => {
             RelayRouter.useRegisterPreloadedAsset(
