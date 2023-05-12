@@ -1,6 +1,6 @@
 (library
- (name RescriptRelayPpxLibrary)
- (public_name rescript-relay-ppx)
+ (name melange_relay_ppx)
+ (public_name melange-relay.ppx)
  (libraries ppxlib graphql_parser str)
  (kind ppx_rewriter)
  (preprocess

@@ -2,4 +2,4 @@
  (package melange-relay)
  (name ppx)
  (public_name ppx)
- (libraries rescript-relay-ppx ppxlib))
+ (libraries melange-relay.ppx ppxlib))
