@@ -1,6 +1,6 @@
 (library
- (public_name reason-relay)
- (name reason_relay)
+ (public_name melange-relay)
+ (name melange_relay)
  (wrapped false)
  (modes melange)
  (preprocess

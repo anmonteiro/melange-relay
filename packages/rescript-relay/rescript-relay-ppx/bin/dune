@@ -1,4 +1,5 @@
 (executable
- (name RescriptRelayPpxApp)
- (public_name RescriptRelayPpxApp.exe)
+ (package melange-relay)
+ (name ppx)
+ (public_name ppx)
  (libraries rescript-relay-ppx ppxlib))

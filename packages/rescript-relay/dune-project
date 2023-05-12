@@ -20,11 +20,20 @@
 (license "MIT")
 
 (package
- (name reason-relay)
+ (name melange-relay)
  (synopsis "Relay (relay.dev) support for Melange")
  (depends
   (ocaml
    (>= "4.13.0"))
   melange
   reason-react
-  reactjs-jsx-ppx))
+  (reactjs-jsx-ppx :with-test)))
+
+(package
+ (name rescript-relay-ppx)
+ (synopsis "Relay (relay.dev) support for Melange")
+ (depends
+  (ocaml
+   (>= "4.13.0"))
+  ppxlib
+  graphql_parser))
