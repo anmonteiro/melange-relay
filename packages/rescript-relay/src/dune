@@ -4,7 +4,7 @@
  (wrapped false)
  (modes melange)
  (preprocess
-  (pps melange.ppx))
+  (pps melange.ppx reactjs-jsx-ppx))
  (libraries reason-react)
  (melange.compile_flags -w -61-69)
  (melange.runtime_deps ./utils.js))

@@ -1,42 +1,42 @@
-const { traverser } = require("../src/utils");
+const { traverser } = require('melange-relay/utils.js');
 
-describe("conversion", () => {
-  it("handles nullables at various levels", () => {
+describe('conversion', () => {
+  it('handles nullables at various levels', () => {
     expect(
       traverser(
         {
           me: {
-            name: "Name",
+            name: 'Name',
             age: null,
-            nicknames: [null, "SomeName"],
-            nestedObjects: [{ someProp: null, otherProp: "Lars" }, null],
+            nicknames: [null, 'SomeName'],
+            nestedObjects: [{ someProp: null, otherProp: 'Lars' }, null],
           },
           otherProp: null,
         },
         {
           __root: {
-            "": {
-              f: "",
+            '': {
+              f: '',
             },
             otherProp: {
-              n: "",
+              n: '',
             },
             me: {
-              n: "",
-              f: "",
+              n: '',
+              f: '',
             },
             me_age: {
-              n: "",
+              n: '',
             },
             me_nicknames: {
-              n: "",
+              n: '',
             },
             me_nestedObjects: {
-              n: "",
-              f: "",
+              n: '',
+              f: '',
             },
             me_nestedObjects_someProp: {
-              n: "",
+              n: '',
             },
           },
         },
@@ -47,13 +47,13 @@ describe("conversion", () => {
       fragmentRefs: expect.any(Object),
       me: {
         fragmentRefs: expect.any(Object),
-        name: "Name",
+        name: 'Name',
         age: undefined,
-        nicknames: [undefined, "SomeName"],
+        nicknames: [undefined, 'SomeName'],
         nestedObjects: [
           {
             someProp: undefined,
-            otherProp: "Lars",
+            otherProp: 'Lars',
             fragmentRefs: expect.any(Object),
           },
           undefined,
@@ -63,18 +63,18 @@ describe("conversion", () => {
     });
   });
 
-  it("does not produce circular references", () => {
+  it('does not produce circular references', () => {
     let traversedObj = traverser(
       {
         otherProp: null,
       },
       {
         __root: {
-          "": {
-            f: "",
+          '': {
+            f: '',
           },
           otherProp: {
-            n: "",
+            n: '',
           },
         },
       },
@@ -91,40 +91,40 @@ describe("conversion", () => {
     expect.assertions(1);
   });
 
-  it("handles converting enums", () => {
+  it('handles converting enums', () => {
     expect(
       traverser(
         {
-          ageRange: "999",
+          ageRange: '999',
           me: {
-            name: "Name",
-            ageRange: "123",
-            ageRanges: [null, "234"],
-            nestedObjects: [{ someProp: null, otherProp: "345" }, null],
+            name: 'Name',
+            ageRange: '123',
+            ageRanges: [null, '234'],
+            nestedObjects: [{ someProp: null, otherProp: '345' }, null],
           },
         },
         {
           __root: {
             ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             me_ageRange: {
-              n: "",
-              e: "enum_Enum",
+              n: '',
+              e: 'enum_Enum',
             },
             me_ageRanges: {
-              n: "",
-              e: "enum_Enum",
+              n: '',
+              e: 'enum_Enum',
             },
             me_nestedObjects: {
-              n: "",
+              n: '',
             },
             me_nestedObjects_someProp: {
-              n: "",
+              n: '',
             },
             me_nestedObjects_otherProp: {
-              n: "",
-              e: "enum_Enum",
+              n: '',
+              e: 'enum_Enum',
             },
           },
         },
@@ -136,7 +136,7 @@ describe("conversion", () => {
     ).toEqual({
       ageRange: 999,
       me: {
-        name: "Name",
+        name: 'Name',
         ageRange: 123,
         ageRanges: [undefined, 234],
         nestedObjects: [
@@ -151,46 +151,46 @@ describe("conversion", () => {
     });
   });
 
-  it("handles converting unions, including nested unions", () => {
+  it('handles converting unions, including nested unions', () => {
     expect(
       traverser(
         {
           someUnion: {
-            __typename: "User",
-            firstName: "First",
-            ageRange: "123",
+            __typename: 'User',
+            firstName: 'First',
+            ageRange: '123',
             meta: {
-              ageRange: "234",
+              ageRange: '234',
               nullable: null,
             },
           },
           friends: [
             null,
             {
-              __typename: "User",
-              firstName: "First",
-              ageRange: "123",
+              __typename: 'User',
+              firstName: 'First',
+              ageRange: '123',
               meta: {
-                ageRange: "234",
+                ageRange: '234',
                 nullable: null,
               },
             },
             {
-              __typename: "Observer",
+              __typename: 'Observer',
               name: null,
-              ageRange: "345",
+              ageRange: '345',
               meta: {
-                ageRange: "456",
+                ageRange: '456',
                 nullable: null,
               },
               friends: [
                 null,
                 {
-                  __typename: "User",
-                  firstName: "Second",
-                  ageRange: "999",
+                  __typename: 'User',
+                  firstName: 'Second',
+                  ageRange: '999',
                   meta: {
-                    ageRange: "123",
+                    ageRange: '123',
                     nullable: null,
                   },
                 },
@@ -200,83 +200,83 @@ describe("conversion", () => {
         },
         {
           __root: {
-            "": {
-              f: "",
+            '': {
+              f: '',
             },
             someUnion: {
-              n: "",
-              u: "union_Union",
+              n: '',
+              u: 'union_Union',
             },
             someUnion_User: {
-              f: "",
+              f: '',
             },
             someUnion_User_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             someUnion_User_meta: {
-              f: "",
+              f: '',
             },
             someUnion_User_meta_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             someUnion_User_meta_nullable: {
-              n: "",
+              n: '',
             },
             friends: {
-              n: "",
-              u: "union_Union",
+              n: '',
+              u: 'union_Union',
             },
             friends_User: {
-              f: "",
+              f: '',
             },
             friends_User_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             friends_User_meta: {
-              f: "",
+              f: '',
             },
             friends_User_meta_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             friends_User_meta_nullable: {
-              n: "",
+              n: '',
             },
             friends_Observer: {
-              f: "",
+              f: '',
             },
             friends_Observer_name: {
-              n: "",
+              n: '',
             },
             friends_Observer_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             friends_Observer_meta: {
-              f: "",
+              f: '',
             },
             friends_Observer_meta_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             friends_Observer_meta_nullable: {
-              n: "",
+              n: '',
             },
             friends_Observer_friends: {
-              n: "",
-              u: "union_Union",
+              n: '',
+              u: 'union_Union',
             },
             friends_Observer_friends_User_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             friends_Observer_friends_User: {
-              f: "",
+              f: '',
             },
             friends_Observer_friends_User_meta: {
-              f: "",
+              f: '',
             },
             friends_Observer_friends_User_meta_ageRange: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             friends_Observer_friends_User_meta_nullable: {
-              n: "",
+              n: '',
             },
           },
         },
@@ -292,8 +292,8 @@ describe("conversion", () => {
         123,
         {
           fragmentRefs: expect.any(Object),
-          __typename: "User",
-          firstName: "First",
+          __typename: 'User',
+          firstName: 'First',
           ageRange: 123,
           meta: {
             fragmentRefs: expect.any(Object),
@@ -308,8 +308,8 @@ describe("conversion", () => {
           123,
           {
             fragmentRefs: expect.any(Object),
-            __typename: "User",
-            firstName: "First",
+            __typename: 'User',
+            firstName: 'First',
             ageRange: 123,
             meta: {
               fragmentRefs: expect.any(Object),
@@ -322,7 +322,7 @@ describe("conversion", () => {
           123,
           {
             fragmentRefs: expect.any(Object),
-            __typename: "Observer",
+            __typename: 'Observer',
             name: undefined,
             ageRange: 345,
             meta: {
@@ -336,8 +336,8 @@ describe("conversion", () => {
                 123,
                 {
                   fragmentRefs: expect.any(Object),
-                  __typename: "User",
-                  firstName: "Second",
+                  __typename: 'User',
+                  firstName: 'Second',
                   ageRange: 999,
                   meta: {
                     fragmentRefs: expect.any(Object),
@@ -353,25 +353,25 @@ describe("conversion", () => {
     });
   });
 
-  it("handles recursive objects (input objects)", () => {
+  it('handles recursive objects (input objects)', () => {
     expect(
       traverser(
         {
           someInput: {
-            someEnum: "999",
+            someEnum: '999',
             lat: null,
             meta: {
-              someEnum: "888",
+              someEnum: '888',
               nullable: null,
             },
             anotherInput: {
               meta: null,
-              someEnum: "123",
+              someEnum: '123',
               anotherInput: {
-                someEnum: "234",
+                someEnum: '234',
                 anotherInput: null,
                 meta: {
-                  someEnum: "888",
+                  someEnum: '888',
                   nullable: null,
                 },
               },
@@ -381,45 +381,45 @@ describe("conversion", () => {
         {
           AnotherInput: {
             someEnum: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             anotherInput: {
-              n: "",
-              r: "AnotherInput",
+              n: '',
+              r: 'AnotherInput',
             },
             meta: {
-              n: "",
+              n: '',
             },
             meta_someEnum: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             meta_nullable: {
-              n: "",
+              n: '',
             },
           },
           SomeInput: {
             lat: {
-              n: "",
+              n: '',
             },
             someEnum: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             anotherInput: {
-              r: "AnotherInput",
+              r: 'AnotherInput',
             },
             meta: {
-              n: "",
+              n: '',
             },
             meta_someEnum: {
-              e: "enum_Enum",
+              e: 'enum_Enum',
             },
             meta_nullable: {
-              n: "",
+              n: '',
             },
           },
           __root: {
             someInput: {
-              r: "SomeInput",
+              r: 'SomeInput',
             },
           },
         },
@@ -452,63 +452,63 @@ describe("conversion", () => {
     });
   });
 
-  it("handles top level unions on fragments", () => {
+  it('handles top level unions on fragments', () => {
     expect(
       traverser(
         {
-          __typename: "User",
-          name: "Name",
-          onlineStatus: "Online",
+          __typename: 'User',
+          name: 'Name',
+          onlineStatus: 'Online',
         },
         {
           __root: {
-            "": { u: "fragment" },
-            User_onlineStatus: { n: "", e: "enum_OnlineStatus" },
+            '': { u: 'fragment' },
+            User_onlineStatus: { n: '', e: 'enum_OnlineStatus' },
           },
         },
         {
           fragment: (v) => [123, v],
-          enum_OnlineStatus: (v) => "enum_OnlineStatus",
+          enum_OnlineStatus: (v) => 'enum_OnlineStatus',
         },
         undefined
       )
     ).toEqual([
       123,
       {
-        __typename: "User",
-        name: "Name",
-        onlineStatus: "enum_OnlineStatus",
+        __typename: 'User',
+        name: 'Name',
+        onlineStatus: 'enum_OnlineStatus',
       },
     ]);
   });
 
-  it("handles nullable top level arrays", () => {
+  it('handles nullable top level arrays', () => {
     expect(
       traverser(
         [
           {
-            name: "Name",
+            name: 'Name',
           },
           null,
         ],
 
-        { __root: { "": { na: "" } } },
+        { __root: { '': { na: '' } } },
         undefined
       )
     ).toEqual([
       {
-        name: "Name",
+        name: 'Name',
       },
       undefined,
     ]);
   });
 
-  test("regression - union members not converted properly via member path", () => {
+  test('regression - union members not converted properly via member path', () => {
     expect(
       traverser(
         {
-          __typename: "RecurringCost",
-          id: "UmVjdXJyaW5nQ29zdDoxNjI2Y2QwNC0yMmE0LTQ5MjktOWQ0MC1hYzdmYzBhNWVkZjY,",
+          __typename: 'RecurringCost',
+          id: 'UmVjdXJyaW5nQ29zdDoxNjI2Y2QwNC0yMmE0LTQ5MjktOWQ0MC1hYzdmYzBhNWVkZjY,',
           endDate: null,
           startDate: 1633046400000,
           active: true,
@@ -517,18 +517,18 @@ describe("conversion", () => {
               CurrencyValueDisplayer_value: true,
             },
           },
-          identifier: "Google Ads",
+          identifier: 'Google Ads',
           sources: [
             {
-              source: "google_search_engine_marketing",
+              source: 'google_search_engine_marketing',
             },
           ],
         },
         {
           __root: {
-            RecurringCost_endDate: { n: "" },
-            RecurringCost_cost: { f: "" },
-            "": { u: "fragment" },
+            RecurringCost_endDate: { n: '' },
+            RecurringCost_cost: { f: '' },
+            '': { u: 'fragment' },
           },
         },
         {
@@ -540,8 +540,8 @@ describe("conversion", () => {
     ).toEqual([
       123,
       {
-        __typename: "RecurringCost",
-        id: "UmVjdXJyaW5nQ29zdDoxNjI2Y2QwNC0yMmE0LTQ5MjktOWQ0MC1hYzdmYzBhNWVkZjY,",
+        __typename: 'RecurringCost',
+        id: 'UmVjdXJyaW5nQ29zdDoxNjI2Y2QwNC0yMmE0LTQ5MjktOWQ0MC1hYzdmYzBhNWVkZjY,',
         endDate: undefined,
         startDate: 1633046400000,
         active: true,
@@ -551,39 +551,39 @@ describe("conversion", () => {
             CurrencyValueDisplayer_value: true,
           },
         },
-        identifier: "Google Ads",
+        identifier: 'Google Ads',
         sources: [
           {
-            source: "google_search_engine_marketing",
+            source: 'google_search_engine_marketing',
           },
         ],
       },
     ]);
   });
 
-  describe("blocking traversal", () => {
-    test("block", () => {
+  describe('blocking traversal', () => {
+    test('block', () => {
       expect(
         traverser(
           {
             input: {
-              onlineStatus: "Idle",
+              onlineStatus: 'Idle',
               someJsonValue: {
                 foo: null,
-                bar: [["Boz", ["other text"]]],
-                baz: "some string",
+                bar: [['Boz', ['other text']]],
+                baz: 'some string',
               },
               recursed: {
-                someValue: "100",
+                someValue: '100',
                 setOnlineStatus: {
-                  onlineStatus: "Online",
+                  onlineStatus: 'Online',
                   someJsonValue: {
                     foo: null,
-                    bar: [["Boz", ["other text"]]],
-                    baz: "some string",
+                    bar: [['Boz', ['other text']]],
+                    baz: 'some string',
                   },
                   recursed: {
-                    someValue: "100",
+                    someValue: '100',
                   },
                 },
               },
@@ -591,36 +591,36 @@ describe("conversion", () => {
           },
           {
             recursiveSetOnlineStatusInput: {
-              someValue: { c: "TestsUtils.IntString" },
-              setOnlineStatus: { r: "setOnlineStatusInput" },
+              someValue: { c: 'TestsUtils.IntString' },
+              setOnlineStatus: { r: 'setOnlineStatusInput' },
             },
             setOnlineStatusInput: {
-              someJsonValue: { b: "" },
-              recursed: { r: "recursiveSetOnlineStatusInput" },
+              someJsonValue: { b: '' },
+              recursed: { r: 'recursiveSetOnlineStatusInput' },
             },
-            __root: { input: { r: "setOnlineStatusInput" } },
+            __root: { input: { r: 'setOnlineStatusInput' } },
           },
           {
-            "TestsUtils.IntString": (v) => parseInt(v),
+            'TestsUtils.IntString': (v) => parseInt(v),
           },
           undefined
         )
       ).toEqual({
         input: {
-          onlineStatus: "Idle",
+          onlineStatus: 'Idle',
           someJsonValue: {
             foo: null,
-            bar: [["Boz", ["other text"]]],
-            baz: "some string",
+            bar: [['Boz', ['other text']]],
+            baz: 'some string',
           },
           recursed: {
             someValue: 100,
             setOnlineStatus: {
-              onlineStatus: "Online",
+              onlineStatus: 'Online',
               someJsonValue: {
                 foo: null,
-                bar: [["Boz", ["other text"]]],
-                baz: "some string",
+                bar: [['Boz', ['other text']]],
+                baz: 'some string',
               },
               recursed: {
                 someValue: 100,
@@ -631,7 +631,7 @@ describe("conversion", () => {
       });
     });
 
-    test("properly block", () => {
+    test('properly block', () => {
       const customScalar = {
         someProp: null,
       };
@@ -647,15 +647,15 @@ describe("conversion", () => {
         {
           __root: {
             someCustomScalarHolder_someCustomScalar: {
-              c: "TestsUtils.SomeCustomScalar",
+              c: 'TestsUtils.SomeCustomScalar',
             },
             someCustomScalarHolder_asArray: {
-              b: "a",
+              b: 'a',
             },
           },
         },
         {
-          "TestsUtils.SomeCustomScalar": () => customScalar,
+          'TestsUtils.SomeCustomScalar': () => customScalar,
         },
         undefined
       );
@@ -674,7 +674,7 @@ describe("conversion", () => {
       expect(traversed.someCustomScalarHolder.asArray[0]).toBe(customScalar);
     });
 
-    test("traversals can be blocked", () => {
+    test('traversals can be blocked', () => {
       expect(
         traverser(
           {
@@ -686,16 +686,16 @@ describe("conversion", () => {
           {
             __root: {
               someJsonValue: {
-                b: "",
+                b: '',
               },
               someJsonValueInArr: {
-                b: "a",
+                b: 'a',
               },
               someJsonValueAsArr: {
-                b: "",
+                b: '',
               },
               someJsonValueAsArrInArr: {
-                b: "a",
+                b: 'a',
               },
             },
           },
@@ -716,34 +716,34 @@ describe("conversion", () => {
     });
   });
 
-  describe("regression - union not wrapped", () => {
-    test("case 1", () => {
+  describe('regression - union not wrapped', () => {
+    test('case 1', () => {
       expect(
         traverser(
           {
-            __typename: "EphemeralForSalePropertySearch",
+            __typename: 'EphemeralForSalePropertySearch',
             localUnsavedPropertySearch: {
-              NAME: "EphemeralForSalePropertySearch",
+              NAME: 'EphemeralForSalePropertySearch',
               VAL: {
-                __typename: "EphemeralForSalePropertySearch",
-                __isPropertySearch: "EphemeralForSalePropertySearch",
+                __typename: 'EphemeralForSalePropertySearch',
+                __isPropertySearch: 'EphemeralForSalePropertySearch',
                 forSalePropertyTypes: [],
                 isLocalUnsavedSearch: true,
-                nodeId: "local-unsaved-search",
+                nodeId: 'local-unsaved-search',
               },
             },
           },
           {
             __root: {
               localUnsavedPropertySearch: {
-                u: "rawResponse_localUnsavedPropertySearch",
+                u: 'rawResponse_localUnsavedPropertySearch',
               },
             },
           },
           {
             rawResponse_localUnsavedPropertySearch:
               function wrap_rawResponse_localUnsavedPropertySearch(v) {
-                if (v.NAME === "UnselectedUnionMember") {
+                if (v.NAME === 'UnselectedUnionMember') {
                   return {
                     __typename: v.VAL,
                   };
@@ -756,41 +756,41 @@ describe("conversion", () => {
           undefined
         )
       ).toEqual({
-        __typename: "EphemeralForSalePropertySearch",
+        __typename: 'EphemeralForSalePropertySearch',
         localUnsavedPropertySearch: {
-          __typename: "EphemeralForSalePropertySearch",
-          __isPropertySearch: "EphemeralForSalePropertySearch",
+          __typename: 'EphemeralForSalePropertySearch',
+          __isPropertySearch: 'EphemeralForSalePropertySearch',
           forSalePropertyTypes: [],
           isLocalUnsavedSearch: true,
-          nodeId: "local-unsaved-search",
+          nodeId: 'local-unsaved-search',
         },
       });
     });
 
-    test("case 2, nested union", () => {
+    test('case 2, nested union', () => {
       expect(
         traverser(
           {
             node: {
-              __typename: "User",
+              __typename: 'User',
               avatarUrl: undefined,
-              firstName: "AnotherFirst",
-              id: "user-1",
+              firstName: 'AnotherFirst',
+              id: 'user-1',
               memberOf: [
                 {
-                  NAME: "Group",
+                  NAME: 'Group',
                   VAL: {
-                    __typename: "Group",
-                    __isNode: "Group",
-                    id: "group-1",
-                    name: "Some Group",
+                    __typename: 'Group',
+                    __isNode: 'Group',
+                    id: 'group-1',
+                    name: 'Some Group',
                     topMember: {
-                      NAME: "User",
+                      NAME: 'User',
                       VAL: {
-                        __typename: "User",
-                        __isNode: "User",
-                        firstName: "Some User",
-                        id: "user-2",
+                        __typename: 'User',
+                        __isNode: 'User',
+                        firstName: 'Some User',
+                        id: 'user-2',
                       },
                     },
                   },
@@ -802,17 +802,17 @@ describe("conversion", () => {
           {
             __root: {
               node_memberOf_Group_topMember: {
-                u: "rawResponse_node_memberOf_Group_topMember",
+                u: 'rawResponse_node_memberOf_Group_topMember',
               },
-              node_memberOfSingular: { u: "rawResponse_node_memberOfSingular" },
-              node_memberOf: { u: "rawResponse_node_memberOf" },
-              node: { tnf: "User" },
+              node_memberOfSingular: { u: 'rawResponse_node_memberOfSingular' },
+              node_memberOf: { u: 'rawResponse_node_memberOf' },
+              node: { tnf: 'User' },
             },
           },
           {
             rawResponse_node_memberOf_Group_topMember:
               function wrap_rawResponse_node_memberOf_Group_topMember(v) {
-                if (v.NAME === "User") {
+                if (v.NAME === 'User') {
                   return v.VAL;
                 } else {
                   return {
@@ -823,7 +823,7 @@ describe("conversion", () => {
             rawResponse_node_memberOf: function wrap_rawResponse_node_memberOf(
               v
             ) {
-              if (v.NAME === "UnselectedUnionMember") {
+              if (v.NAME === 'UnselectedUnionMember') {
                 return {
                   __typename: v.VAL,
                 };
@@ -833,7 +833,7 @@ describe("conversion", () => {
             },
             rawResponse_node_memberOfSingular:
               function wrap_rawResponse_node_memberOfSingular(v) {
-                if (v.NAME === "UnselectedUnionMember") {
+                if (v.NAME === 'UnselectedUnionMember') {
                   return {
                     __typename: v.VAL,
                   };
@@ -847,21 +847,21 @@ describe("conversion", () => {
         )
       ).toEqual({
         node: {
-          __typename: "User",
+          __typename: 'User',
           avatarUrl: null,
-          firstName: "AnotherFirst",
-          id: "user-1",
+          firstName: 'AnotherFirst',
+          id: 'user-1',
           memberOf: [
             {
-              __typename: "Group",
-              __isNode: "Group",
-              id: "group-1",
-              name: "Some Group",
+              __typename: 'Group',
+              __isNode: 'Group',
+              id: 'group-1',
+              name: 'Some Group',
               topMember: {
-                __typename: "User",
-                __isNode: "User",
-                firstName: "Some User",
-                id: "user-2",
+                __typename: 'User',
+                __isNode: 'User',
+                firstName: 'Some User',
+                id: 'user-2',
               },
             },
           ],

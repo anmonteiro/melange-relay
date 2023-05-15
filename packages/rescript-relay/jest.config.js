@@ -1,7 +1,9 @@
 module.exports = {
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   bail: true,
-  testRegex: "/__tests__/.*-tests.js$",
-  roots: ["<rootDir>/__tests__"],
-  setupFilesAfterEnv: ["<rootDir>/__tests__/jestSetup.js"],
+  testRegex: '/__tests__/.*-tests.js$',
+  roots: ['<rootDir>/tests'],
+  setupFilesAfterEnv: [
+    '<rootDir>/tests/rescript-relay/packages/rescript-relay/__tests__/jestSetup.js',
+  ],
 };
