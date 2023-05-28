@@ -676,7 +676,7 @@ module RequiredFieldLogger = struct
     [ `missing_field_log [@bs.as "missing_field.log"]
     | `missing_field_throw [@bs.as "missing_field.throw"]
     ]
-  [@@bs.deriving { jsConverter = newType }]
+  [@@deriving jsConverter { newType }]
 
   type nonrec arg =
     { kind : abs_kind
@@ -698,11 +698,11 @@ module Environment = struct
   type nonrec 'a environmentConfig =
     { network : Network.t
     ; store : Store.t
-    ; getDataID : nodeObj:'a -> typeName:string -> string [@optional]
-    ; treatMissingFieldsAsNull : bool [@optional]
+    ; getDataID : (nodeObj:'a -> typeName:string -> string) option [@optional]
+    ; treatMissingFieldsAsNull : bool option [@optional]
     ; missingFieldHandlers : MissingFieldHandler.t array
-    ; requiredFieldLogger : RequiredFieldLogger.js [@optional]
-    ; isServer : bool [@optional]
+    ; requiredFieldLogger : RequiredFieldLogger.js option [@optional]
+    ; isServer : bool option [@optional]
     }
   [@@deriving abstract]
 
