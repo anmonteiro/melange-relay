@@ -1,6 +1,6 @@
 exception Graphql_error(string);
 
-[@bs.deriving jsConverter]
+[@deriving jsConverter]
 type t = {
   [@bs.as "content-type"]
   contentType: string,

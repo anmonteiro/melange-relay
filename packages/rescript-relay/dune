@@ -8,7 +8,7 @@
   (name tests)
   (modes melange)
   (preprocess
-   (pps melange.ppx reactjs-jsx-ppx melange-relay.ppx))
+   (pps melange.ppx reason-react-ppx melange-relay.ppx))
   (libraries reason-react melange-relay melange-fetch)
   (melange.compile_flags :standard -w -9-34-61-69)
   (melange.runtime_deps
