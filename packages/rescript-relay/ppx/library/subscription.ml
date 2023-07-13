@@ -23,12 +23,12 @@ let make ~loc ~moduleName =
                  [%t typeFromGeneratedModule [ "relayOperationNode" ]]
                  Melange_relay.subscriptionNode
              ; variables : [%t typeFromGeneratedModule [ "Types"; "variables" ]]
-             ; onCompleted : unit -> unit [@optional]
-             ; onError : Js.Exn.t -> unit [@optional]
+             ; onCompleted : (unit -> unit) option [@optional]
+             ; onError : (Js.Exn.t -> unit) option [@optional]
              ; onNext :
-                 [%t typeFromGeneratedModule [ "Types"; "response" ]] -> unit
+                 ([%t typeFromGeneratedModule [ "Types"; "response" ]] -> unit) option
                    [@optional]
-             ; updater : updaterFn [@optional]
+             ; updater : updaterFn option [@optional]
              }
            [@@deriving abstract] [@@live]]
        ; [%stri

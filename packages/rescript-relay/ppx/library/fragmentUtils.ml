@@ -49,8 +49,8 @@ let makeRefetchableAssets
   | Some queryName ->
     [ [%stri
         type refetchableFnOpts =
-          { fetchPolicy : string [@optional]
-          ; onComplete : Js.Exn.t Js.Nullable.t -> unit [@optional]
+          { fetchPolicy : string option [@optional]
+          ; onComplete : (Js.Exn.t Js.Nullable.t -> unit) option [@optional]
           }
         [@@deriving abstract] [@@live]]
     ; [%stri
