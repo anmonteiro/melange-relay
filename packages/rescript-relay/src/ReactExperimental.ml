@@ -1,18 +1,18 @@
 external useDeferredValue : 'value -> 'value = "useDeferredValue"
-  [@@bs.module "react"]
+  [@@mel.module "react"]
 
 external useTransitionWithOptions :
    unit
   -> bool
-     * (((unit -> unit) -> < name : string option > Js.t option -> unit)[@bs])
+     * (((unit -> unit) -> < name : string option > Js.t option -> unit)[@u])
   = "useTransition"
-  [@@bs.module "react"]
+  [@@mel.module "react"]
 
 let useTransition () =
   let isPending, startTransition = useTransitionWithOptions () in
   ( isPending
   , React.useCallback1
-      (fun cb -> (startTransition cb None [@bs]))
+      (fun cb -> (startTransition cb None [@u]))
       [| startTransition |] )
 
 module SuspenseList = struct
@@ -21,5 +21,5 @@ module SuspenseList = struct
     -> ?revealOrder:[ `forwards | `backwards | `together ]
     -> React.element
     = "SuspenseList"
-    [@@bs.module "react"] [@@react.component]
+    [@@mel.module "react"] [@@react.component]
 end

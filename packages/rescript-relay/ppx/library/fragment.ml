@@ -136,7 +136,7 @@ let make
                                    onComplete
                                    |. Melange_relay_internal
                                       .internal_nullableToOptionalExnHandler
-                               } [@bs]))
+                               } [@u]))
                           [| p.loadNext |]
                     ; loadPrevious =
                         React.useMemo1
@@ -147,7 +147,7 @@ let make
                                    onComplete
                                    |. Melange_relay_internal
                                       .internal_nullableToOptionalExnHandler
-                               } [@bs]))
+                               } [@u]))
                           [| p.loadPrevious |]
                     ; hasNext = p.hasNext
                     ; hasPrevious = p.hasPrevious
@@ -177,7 +177,7 @@ let make
                                (internal_makeRefetchableFnOpts
                                   ?onComplete
                                   ?fetchPolicy
-                                  ()) [@bs]))
+                                  ()) [@u]))
                           [| p.refetch |]
                     }
                     [@@ocaml.doc
@@ -216,7 +216,7 @@ let make
                                    onComplete
                                    |. Melange_relay_internal
                                       .internal_nullableToOptionalExnHandler
-                               } [@bs]))
+                               } [@u]))
                           [| p.loadNext |]
                     ; loadPrevious =
                         React.useMemo1
@@ -227,7 +227,7 @@ let make
                                    onComplete
                                    |. Melange_relay_internal
                                       .internal_nullableToOptionalExnHandler
-                               } [@bs]))
+                               } [@u]))
                           [| p.loadPrevious |]
                     ; hasNext = p.hasNext
                     ; hasPrevious = p.hasPrevious
@@ -255,7 +255,7 @@ let make
                                (internal_makeRefetchableFnOpts
                                   ?onComplete
                                   ?fetchPolicy
-                                  ()) [@bs]))
+                                  ()) [@u]))
                           [| p.refetch |]
                     }
                     [@@ocaml.doc

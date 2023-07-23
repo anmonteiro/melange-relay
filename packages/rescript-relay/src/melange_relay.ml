@@ -564,9 +564,9 @@ module Observable = struct
     }
 
   type nonrec 'response sink =
-    { next : ('response -> unit[@bs])
-    ; error : (Js.Exn.t -> unit[@bs])
-    ; complete : (unit -> unit[@bs])
+    { next : ('response -> unit[@u])
+    ; error : (Js.Exn.t -> unit[@u])
+    ; complete : (unit -> unit[@u])
     ; closed : bool
     }
 
@@ -673,8 +673,8 @@ end
 
 module RequiredFieldLogger = struct
   type kind =
-    [ `missing_field_log [@bs.as "missing_field.log"]
-    | `missing_field_throw [@bs.as "missing_field.throw"]
+    [ `missing_field_log [@mel.as "missing_field.log"]
+    | `missing_field_throw [@mel.as "missing_field.throw"]
     ]
   [@@deriving jsConverter { newType }]
 
@@ -863,13 +863,13 @@ module MakeLoadQuery (C : MakeLoadQueryConfig) = struct
   let queryRefToPromise token =
     Js.Promise.make (fun ~resolve ~reject:_ ->
         match token |. queryRefToObservable with
-        | None -> resolve (Error ()) [@bs]
+        | None -> resolve (Error ()) [@u]
         | Some o ->
           let open Observable in
           let (_ : subscription) =
             o
             |. subscribe
-                 (makeObserver ~complete:(fun () -> (resolve (Ok ()) [@bs])) ())
+                 (makeObserver ~complete:(fun () -> (resolve (Ok ()) [@u])) ())
           in
           ())
 end

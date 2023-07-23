@@ -100,33 +100,33 @@ external isClientID : dataId -> bool = "isClientID"
 
 type nonrec featureFlags =
   { mutable delayCleanupOfPendingPreloadQueries : bool
-        [@bs.as "DELAY_CLEANUP_OF_PENDING_PRELOAD_QUERIES"]
+        [@mel.as "DELAY_CLEANUP_OF_PENDING_PRELOAD_QUERIES"]
   ; mutable enableClientEdges : bool [@as "ENABLE_CLIENT_EDGES"]
   ; mutable enableVariableConnectionKey : bool
-        [@bs.as "ENABLE_VARIABLE_CONNECTION_KEY"]
+        [@mel.as "ENABLE_VARIABLE_CONNECTION_KEY"]
   ; mutable enablePartialRenderingDefault : bool
-        [@bs.as "ENABLE_PARTIAL_RENDERING_DEFAULT"]
+        [@mel.as "ENABLE_PARTIAL_RENDERING_DEFAULT"]
   ; mutable enableReactFlightComponentField : bool
-        [@bs.as "ENABLE_REACT_FLIGHT_COMPONENT_FIELD"]
+        [@mel.as "ENABLE_REACT_FLIGHT_COMPONENT_FIELD"]
   ; mutable enableRelayResolvers : bool [@as "ENABLE_RELAY_RESOLVERS"]
   ; mutable enableGetFragmentIdentifierOptimization : bool
-        [@bs.as "ENABLE_GETFRAGMENTIDENTIFIER_OPTIMIZATION"]
+        [@mel.as "ENABLE_GETFRAGMENTIDENTIFIER_OPTIMIZATION"]
   ; mutable enableFriendlyQueryNameGqlUrl : bool
-        [@bs.as "ENABLE_FRIENDLY_QUERY_NAME_GQL_URL"]
+        [@mel.as "ENABLE_FRIENDLY_QUERY_NAME_GQL_URL"]
   ; mutable enableLoadQueryRequestDeduping : bool
-        [@bs.as "ENABLE_LOAD_QUERY_REQUEST_DEDUPING"]
+        [@mel.as "ENABLE_LOAD_QUERY_REQUEST_DEDUPING"]
   ; mutable enableDoNotWrapLiveQuery : bool
-        [@bs.as "ENABLE_DO_NOT_WRAP_LIVE_QUERY"]
+        [@mel.as "ENABLE_DO_NOT_WRAP_LIVE_QUERY"]
   ; mutable enableNotifySubscription : bool [@as "ENABLE_NOTIFY_SUBSCRIPTION"]
   ; mutable enableContainersSubscribeOnCommit : bool
-        [@bs.as "ENABLE_CONTAINERS_SUBSCRIBE_ON_COMMIT"]
+        [@mel.as "ENABLE_CONTAINERS_SUBSCRIBE_ON_COMMIT"]
   ; mutable enableQueryRendererOffscreenSupport : bool
-        [@bs.as "ENABLE_QUERY_RENDERER_OFFSCREEN_SUPPORT"]
-  ; mutable maxDataIdLength : int option [@bs.as "MAX_DATA_ID_LENGTH"]
+        [@mel.as "ENABLE_QUERY_RENDERER_OFFSCREEN_SUPPORT"]
+  ; mutable maxDataIdLength : int option [@mel.as "MAX_DATA_ID_LENGTH"]
   ; mutable refactorSuspenseResource : bool
-        [@bs.as "REFACTOR_SUSPENSE_RESOURCE"]
-  ; mutable stringInternLevel : int [@bs.as "STRING_INTERN_LEVEL"]
-  ; mutable useReactCache : bool [@bs.as "USE_REACT_CACHE"]
+        [@mel.as "REFACTOR_SUSPENSE_RESOURCE"]
+  ; mutable stringInternLevel : int [@mel.as "STRING_INTERN_LEVEL"]
+  ; mutable useReactCache : bool [@mel.as "USE_REACT_CACHE"]
   }
 (** Relay feature flags. Mutate this record as soon as your application boots to
     enable/disable features.*)
@@ -752,9 +752,9 @@ module Observable : sig
   (** The type representing the observable.*)
 
   type nonrec 'response sink =
-    { next : ('response -> unit[@bs])
-    ; error : (Js.Exn.t -> unit[@bs])
-    ; complete : (unit -> unit[@bs])
+    { next : ('response -> unit[@u])
+    ; error : (Js.Exn.t -> unit[@u])
+    ; complete : (unit -> unit[@u])
     ; closed : bool
     }
   (** This sink can be used to give the observable new data.*)
