@@ -78,10 +78,10 @@ let makeRefetchableAssets
           { data : [%t typeFromGeneratedModule [ "Types"; "fragment" ]]
           ; loadNext :
               (int -> paginationLoadMoreOptions -> Melange_relay.Disposable.t
-              [@bs])
+              [@u])
           ; loadPrevious :
               (int -> paginationLoadMoreOptions -> Melange_relay.Disposable.t
-              [@bs])
+              [@u])
           ; hasNext : bool
           ; hasPrevious : bool
           ; isLoadingNext : bool
@@ -94,7 +94,7 @@ let makeRefetchableAssets
                    [ "Types"; "refetchVariables" ]]
                -> refetchableFnOpts
                -> Melange_relay.Disposable.t
-              [@bs])
+              [@u])
           }
         [@@live]]
     ; [%stri
