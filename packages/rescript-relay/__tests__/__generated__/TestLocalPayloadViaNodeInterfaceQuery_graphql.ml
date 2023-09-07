@@ -1,6 +1,6 @@
 (* @sourceLoc Test_localPayload.re *)
 (* @generated *)
-[%%bs.raw "/* @generated */"]
+[%%mel.raw "/* @generated */"]
 module Types = struct
   [@@@ocaml.warning "-30"]
 
@@ -101,7 +101,7 @@ let wrap_rawResponse_node_memberOf_Group_topMember: [
   | `UnselectedUnionMember of string
 ] -> < __typename: string > Js.t = function 
   | `User(v) -> Obj.magic v
-  | `UnselectedUnionMember v -> [%bs.obj { __typename = v }]
+  | `UnselectedUnionMember v -> [%mel.obj { __typename = v }]
 let unwrap_rawResponse_node_memberOf: < __typename: string > Js.t -> [
   | `Group of Types.rawResponse_node_memberOf_Group
   | `User of Types.rawResponse_node_memberOf_User
@@ -117,7 +117,7 @@ let wrap_rawResponse_node_memberOf: [
 ] -> < __typename: string > Js.t = function 
   | `Group(v) -> Obj.magic v
   | `User(v) -> Obj.magic v
-  | `UnselectedUnionMember v -> [%bs.obj { __typename = v }]
+  | `UnselectedUnionMember v -> [%mel.obj { __typename = v }]
 let unwrap_rawResponse_node_memberOfSingular: < __typename: string > Js.t -> [
   | `Group of Types.rawResponse_node_memberOfSingular_Group
   | `User of Types.rawResponse_node_memberOfSingular_User
@@ -133,9 +133,9 @@ let wrap_rawResponse_node_memberOfSingular: [
 ] -> < __typename: string > Js.t = function 
   | `Group(v) -> Obj.magic v
   | `User(v) -> Obj.magic v
-  | `UnselectedUnionMember v -> [%bs.obj { __typename = v }]
+  | `UnselectedUnionMember v -> [%mel.obj { __typename = v }]
 module Internal = struct
-  let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{}|json}
   ]
   let variablesConverterMap = ()
@@ -144,7 +144,7 @@ module Internal = struct
     variablesConverterMap 
     Js.undefined
     type wrapResponseRaw
-  let wrapResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let wrapResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"node":{"tnf":"User","f":""}}}|json}
   ]
   let wrapResponseConverterMap = ()
@@ -153,7 +153,7 @@ module Internal = struct
     wrapResponseConverterMap 
     Js.null
     type responseRaw
-  let responseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let responseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"node":{"tnf":"User","f":""}}}|json}
   ]
   let responseConverterMap = ()
@@ -162,7 +162,7 @@ module Internal = struct
     responseConverterMap 
     Js.undefined
     type wrapRawResponseRaw
-  let wrapRawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let wrapRawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"node_memberOf_Group_topMember":{"u":"rawResponse_node_memberOf_Group_topMember"},"node_memberOfSingular":{"u":"rawResponse_node_memberOfSingular"},"node_memberOf":{"u":"rawResponse_node_memberOf"},"node":{"tnf":"User"}}}|json}
   ]
   let wrapRawResponseConverterMap = let o = Js.Dict.empty () in 
@@ -175,7 +175,7 @@ module Internal = struct
     wrapRawResponseConverterMap 
     Js.null
     type rawResponseRaw
-  let rawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let rawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"node_memberOf_Group_topMember":{"u":"rawResponse_node_memberOf_Group_topMember"},"node_memberOfSingular":{"u":"rawResponse_node_memberOfSingular"},"node_memberOf":{"u":"rawResponse_node_memberOf"},"node":{"tnf":"User"}}}|json}
   ]
   let rawResponseConverterMap = let o = Js.Dict.empty () in 
@@ -204,7 +204,7 @@ module Utils = struct
     let onlineStatus_fromString (str: string): RelaySchemaAssets_graphql.enum_OnlineStatus_input option =
     onlineStatus_decode (Obj.magic str)
     external makeVariables:     id: string-> 
-   variables = "" [@@bs.obj]
+   variables = "" [@@mel.obj]
 
 
 end
@@ -213,7 +213,7 @@ type relayOperationNode
 type operationType = relayOperationNode Melange_relay.queryNode
 
 
-let node: operationType = [%bs.raw {json| (function(){
+let node: operationType = [%mel.raw {json| (function(){
 var v0 = [
   {
     "defaultValue": null,

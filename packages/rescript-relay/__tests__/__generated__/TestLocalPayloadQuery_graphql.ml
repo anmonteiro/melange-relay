@@ -1,6 +1,6 @@
 (* @sourceLoc Test_localPayload.re *)
 (* @generated *)
-[%%bs.raw "/* @generated */"]
+[%%mel.raw "/* @generated */"]
 module Types = struct
   [@@@ocaml.warning "-30"]
 
@@ -90,7 +90,7 @@ let wrap_rawResponse_loggedInUser_memberOf_Group_topMember: [
   | `UnselectedUnionMember of string
 ] -> < __typename: string > Js.t = function 
   | `User(v) -> Obj.magic v
-  | `UnselectedUnionMember v -> [%bs.obj { __typename = v }]
+  | `UnselectedUnionMember v -> [%mel.obj { __typename = v }]
 let unwrap_rawResponse_loggedInUser_memberOf: < __typename: string > Js.t -> [
   | `Group of Types.rawResponse_loggedInUser_memberOf_Group
   | `User of Types.rawResponse_loggedInUser_memberOf_User
@@ -106,7 +106,7 @@ let wrap_rawResponse_loggedInUser_memberOf: [
 ] -> < __typename: string > Js.t = function 
   | `Group(v) -> Obj.magic v
   | `User(v) -> Obj.magic v
-  | `UnselectedUnionMember v -> [%bs.obj { __typename = v }]
+  | `UnselectedUnionMember v -> [%mel.obj { __typename = v }]
 let unwrap_rawResponse_loggedInUser_memberOfSingular: < __typename: string > Js.t -> [
   | `Group of Types.rawResponse_loggedInUser_memberOfSingular_Group
   | `User of Types.rawResponse_loggedInUser_memberOfSingular_User
@@ -122,9 +122,9 @@ let wrap_rawResponse_loggedInUser_memberOfSingular: [
 ] -> < __typename: string > Js.t = function 
   | `Group(v) -> Obj.magic v
   | `User(v) -> Obj.magic v
-  | `UnselectedUnionMember v -> [%bs.obj { __typename = v }]
+  | `UnselectedUnionMember v -> [%mel.obj { __typename = v }]
 module Internal = struct
-  let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{}|json}
   ]
   let variablesConverterMap = ()
@@ -133,7 +133,7 @@ module Internal = struct
     variablesConverterMap 
     Js.undefined
     type wrapResponseRaw
-  let wrapResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let wrapResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"loggedInUser":{"f":""}}}|json}
   ]
   let wrapResponseConverterMap = ()
@@ -142,7 +142,7 @@ module Internal = struct
     wrapResponseConverterMap 
     Js.null
     type responseRaw
-  let responseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let responseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"loggedInUser":{"f":""}}}|json}
   ]
   let responseConverterMap = ()
@@ -151,7 +151,7 @@ module Internal = struct
     responseConverterMap 
     Js.undefined
     type wrapRawResponseRaw
-  let wrapRawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let wrapRawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"loggedInUser_memberOf_Group_topMember":{"u":"rawResponse_loggedInUser_memberOf_Group_topMember"},"loggedInUser_memberOfSingular":{"u":"rawResponse_loggedInUser_memberOfSingular"},"loggedInUser_memberOf":{"u":"rawResponse_loggedInUser_memberOf"}}}|json}
   ]
   let wrapRawResponseConverterMap = let o = Js.Dict.empty () in 
@@ -164,7 +164,7 @@ module Internal = struct
     wrapRawResponseConverterMap 
     Js.null
     type rawResponseRaw
-  let rawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let rawResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"__root":{"loggedInUser_memberOf_Group_topMember":{"u":"rawResponse_loggedInUser_memberOf_Group_topMember"},"loggedInUser_memberOfSingular":{"u":"rawResponse_loggedInUser_memberOfSingular"},"loggedInUser_memberOf":{"u":"rawResponse_loggedInUser_memberOf"}}}|json}
   ]
   let rawResponseConverterMap = let o = Js.Dict.empty () in 
@@ -192,14 +192,14 @@ module Utils = struct
     )
     let onlineStatus_fromString (str: string): RelaySchemaAssets_graphql.enum_OnlineStatus_input option =
     onlineStatus_decode (Obj.magic str)
-    external makeVariables: unit -> unit = "" [@@bs.obj]
+    external makeVariables: unit -> unit = "" [@@mel.obj]
 end
 
 type relayOperationNode
 type operationType = relayOperationNode Melange_relay.queryNode
 
 
-let node: operationType = [%bs.raw {json| (function(){
+let node: operationType = [%mel.raw {json| (function(){
 var v0 = {
   "alias": null,
   "args": null,

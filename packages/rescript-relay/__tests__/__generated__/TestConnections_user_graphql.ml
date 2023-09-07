@@ -1,6 +1,6 @@
 (* @sourceLoc Test_connections.re *)
 (* @generated *)
-[%%bs.raw "/* @generated */"]
+[%%mel.raw "/* @generated */"]
 module Types = struct
   [@@@ocaml.warning "-30"]
 
@@ -21,7 +21,7 @@ end
 
 module Internal = struct
   type fragmentRaw
-  let fragmentConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let fragmentConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{}|json}
   ]
   let fragmentConverterMap = ()
@@ -38,15 +38,15 @@ external getFragmentRef:
 
 let connectionKey = "TestConnections_user_friendsConnection"
 
-[@@bs.inline]
+[@@mel.inline]
 [%%private
-  external internal_makeConnectionId: Melange_relay.dataId -> (_ [@bs.as "TestConnections_user_friendsConnection"]) -> 'arguments -> Melange_relay.dataId = "getConnectionID"
-[@@live] [@@bs.module "relay-runtime"] [@@bs.scope "ConnectionHandler"]
+  external internal_makeConnectionId: Melange_relay.dataId -> (_ [@mel.as "TestConnections_user_friendsConnection"]) -> 'arguments -> Melange_relay.dataId = "getConnectionID"
+[@@live] [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
 
 ]let makeConnectionId (connectionParentDataId: Melange_relay.dataId) ?(onlineStatuses: [`Online | `Idle | `Offline] array=[| `Idle |]) ~(beforeDate: TestsUtils.Datetime.t) () =
   let onlineStatuses = Some onlineStatuses in
   let beforeDate = Some (TestsUtils.Datetime.serialize beforeDate) in
-  let args = [%bs.obj {statuses= onlineStatuses; beforeDate= beforeDate}] in
+  let args = [%mel.obj {statuses= onlineStatuses; beforeDate= beforeDate}] in
   internal_makeConnectionId connectionParentDataId args
 module Utils = struct
   [@@@ocaml.warning "-33"]
@@ -73,7 +73,7 @@ type relayOperationNode
 type operationType = relayOperationNode Melange_relay.fragmentNode
 
 
-let node: operationType = [%bs.raw {json| {
+let node: operationType = [%mel.raw {json| {
   "argumentDefinitions": [
     {
       "defaultValue": null,

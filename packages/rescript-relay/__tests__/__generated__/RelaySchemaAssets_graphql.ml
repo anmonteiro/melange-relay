@@ -38,20 +38,20 @@ type  input_InputA = {
 
 and input_InputA_nullable = {
   time: TestsUtils.Datetime.t;
-  recursiveA: input_InputA_nullable Js.Null.t option [@bs.optional];
-  usingB: input_InputB_nullable Js.Null.t option [@bs.optional];
+  recursiveA: input_InputA_nullable Js.Null.t option [@mel.optional];
+  usingB: input_InputB_nullable Js.Null.t option [@mel.optional];
 }
 
 and input_InputB = {
   time: TestsUtils.Datetime.t option;
   usingA: input_InputA option;
-  constraint_: bool option [@bs.as "constraint"];
+  constraint_: bool option [@mel.as "constraint"];
 }
 
 and input_InputB_nullable = {
-  time: TestsUtils.Datetime.t Js.Null.t option [@bs.optional];
-  usingA: input_InputA_nullable Js.Null.t option [@bs.optional];
-  constraint_: bool Js.Null.t option [@bs.optional] [@bs.as "constraint"];
+  time: TestsUtils.Datetime.t Js.Null.t option [@mel.optional];
+  usingA: input_InputA_nullable Js.Null.t option [@mel.optional];
+  constraint_: bool Js.Null.t option [@mel.optional] [@mel.as "constraint"];
 }
 
 and input_InputC = {
@@ -61,7 +61,7 @@ and input_InputC = {
 
 and input_InputC_nullable = {
   intStr: TestsUtils.IntString.t;
-  recursiveC: input_InputC_nullable Js.Null.t option [@bs.optional];
+  recursiveC: input_InputC_nullable Js.Null.t option [@mel.optional];
 }
 
 and input_SomeInput = {
@@ -71,17 +71,17 @@ and input_SomeInput = {
   int: int option;
   datetime: TestsUtils.Datetime.t option;
   recursive: input_SomeInput option;
-  private_: bool option [@bs.as "private"];
+  private_: bool option [@mel.as "private"];
 }
 
 and input_SomeInput_nullable = {
-  str: string Js.Null.t option [@bs.optional];
-  bool: bool Js.Null.t option [@bs.optional];
-  float: float Js.Null.t option [@bs.optional];
-  int: int Js.Null.t option [@bs.optional];
-  datetime: TestsUtils.Datetime.t Js.Null.t option [@bs.optional];
-  recursive: input_SomeInput_nullable Js.Null.t option [@bs.optional];
-  private_: bool Js.Null.t option [@bs.optional] [@bs.as "private"];
+  str: string Js.Null.t option [@mel.optional];
+  bool: bool Js.Null.t option [@mel.optional];
+  float: float Js.Null.t option [@mel.optional];
+  int: int Js.Null.t option [@mel.optional];
+  datetime: TestsUtils.Datetime.t Js.Null.t option [@mel.optional];
+  recursive: input_SomeInput_nullable Js.Null.t option [@mel.optional];
+  private_: bool Js.Null.t option [@mel.optional] [@mel.as "private"];
 }
 
 and input_RecursiveSetOnlineStatusInput = {
@@ -91,7 +91,7 @@ and input_RecursiveSetOnlineStatusInput = {
 
 and input_RecursiveSetOnlineStatusInput_nullable = {
   someValue: TestsUtils.IntString.t;
-  setOnlineStatus: input_SetOnlineStatusInput_nullable Js.Null.t option [@bs.optional];
+  setOnlineStatus: input_SetOnlineStatusInput_nullable Js.Null.t option [@mel.optional];
 }
 
 and input_SetOnlineStatusInput = {
@@ -103,7 +103,7 @@ and input_SetOnlineStatusInput = {
 and input_SetOnlineStatusInput_nullable = {
   onlineStatus: [`Online | `Idle | `Offline];
   someJsonValue: Js.Json.t;
-  recursed: input_RecursiveSetOnlineStatusInput_nullable Js.Null.t option [@bs.optional];
+  recursed: input_RecursiveSetOnlineStatusInput_nullable Js.Null.t option [@mel.optional];
 }
 
 and input_SearchInput = {
@@ -113,9 +113,9 @@ and input_SearchInput = {
 }
 
 and input_SearchInput_nullable = {
-  names: string Js.Null.t array Js.Null.t option [@bs.optional];
+  names: string Js.Null.t array Js.Null.t option [@mel.optional];
   id: int;
-  someOtherId: float Js.Null.t option [@bs.optional];
+  someOtherId: float Js.Null.t option [@mel.optional];
 }
 
 and input_PesticideListSearchInput = {
@@ -126,8 +126,8 @@ and input_PesticideListSearchInput = {
 }
 
 and input_PesticideListSearchInput_nullable = {
-  companyName: string array Js.Null.t option [@bs.optional];
-  pesticideIds: int array Js.Null.t option [@bs.optional];
+  companyName: string array Js.Null.t option [@mel.optional];
+  pesticideIds: int array Js.Null.t option [@mel.optional];
   skip: int;
   take: int;
 }
@@ -137,20 +137,20 @@ external make_InputA:
   ?recursiveA: input_InputA -> 
   ?usingB: input_InputB -> 
   unit ->
- input_InputA = "" [@@bs.obj]
+ input_InputA = "" [@@mel.obj]
 
 external make_InputB: 
   ?time: TestsUtils.Datetime.t -> 
   ?usingA: input_InputA -> 
   ?_constraint: bool -> 
   unit ->
- input_InputB = "" [@@bs.obj]
+ input_InputB = "" [@@mel.obj]
 
 external make_InputC: 
   intStr: TestsUtils.IntString.t -> 
   ?recursiveC: input_InputC -> 
   unit ->
- input_InputC = "" [@@bs.obj]
+ input_InputC = "" [@@mel.obj]
 
 external make_SomeInput: 
   ?str: string -> 
@@ -161,27 +161,27 @@ external make_SomeInput:
   ?recursive: input_SomeInput -> 
   ?_private: bool -> 
   unit ->
- input_SomeInput = "" [@@bs.obj]
+ input_SomeInput = "" [@@mel.obj]
 
 external make_RecursiveSetOnlineStatusInput: 
   someValue: TestsUtils.IntString.t -> 
   ?setOnlineStatus: input_SetOnlineStatusInput -> 
   unit ->
- input_RecursiveSetOnlineStatusInput = "" [@@bs.obj]
+ input_RecursiveSetOnlineStatusInput = "" [@@mel.obj]
 
 external make_SetOnlineStatusInput: 
   onlineStatus: [`Online | `Idle | `Offline] -> 
   someJsonValue: Js.Json.t -> 
   ?recursed: input_RecursiveSetOnlineStatusInput -> 
   unit ->
- input_SetOnlineStatusInput = "" [@@bs.obj]
+ input_SetOnlineStatusInput = "" [@@mel.obj]
 
 external make_SearchInput: 
   ?names: string option array -> 
   id: int -> 
   ?someOtherId: float -> 
   unit ->
- input_SearchInput = "" [@@bs.obj]
+ input_SearchInput = "" [@@mel.obj]
 
 external make_PesticideListSearchInput: 
   ?companyName: string array -> 
@@ -189,5 +189,5 @@ external make_PesticideListSearchInput:
   skip: int -> 
   take: int -> 
   unit ->
- input_PesticideListSearchInput = "" [@@bs.obj]
+ input_PesticideListSearchInput = "" [@@mel.obj]
 

@@ -1,6 +1,6 @@
 (* @sourceLoc Test_nullableVariables.re *)
 (* @generated *)
-[%%bs.raw "/* @generated */"]
+[%%mel.raw "/* @generated */"]
 module Types = struct
   [@@@ocaml.warning "-30"]
 
@@ -23,7 +23,7 @@ module Types = struct
 end
 
 module Internal = struct
-  let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{"someInput":{"recursive":{"r":"someInput"},"datetime":{"c":"TestsUtils.Datetime"}},"__root":{"someInput":{"r":"someInput"}}}|json}
   ]
   let variablesConverterMap = let o = Js.Dict.empty () in 
@@ -34,7 +34,7 @@ module Internal = struct
     variablesConverterMap 
     Js.null
     type wrapResponseRaw
-  let wrapResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let wrapResponseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{}|json}
   ]
   let wrapResponseConverterMap = ()
@@ -43,7 +43,7 @@ module Internal = struct
     wrapResponseConverterMap 
     Js.null
     type responseRaw
-  let responseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%bs.raw 
+  let responseConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
     {json|{}|json}
   ]
   let responseConverterMap = ()
@@ -67,13 +67,13 @@ module Utils = struct
     ?recursive: someInput-> 
     ?str: string-> 
     unit ->
-   someInput = "" [@@bs.obj]
+   someInput = "" [@@mel.obj]
 
 
   external makeVariables:     ?avatarUrl: string-> 
     ?someInput: someInput-> 
     unit ->
-   variables = "" [@@bs.obj]
+   variables = "" [@@mel.obj]
 
 
 end
@@ -82,7 +82,7 @@ type relayOperationNode
 type operationType = relayOperationNode Melange_relay.mutationNode
 
 
-let node: operationType = [%bs.raw {json| (function(){
+let node: operationType = [%mel.raw {json| (function(){
 var v0 = [
   {
     "defaultValue": null,
