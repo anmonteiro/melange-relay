@@ -32,11 +32,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1694041051,
-        "narHash": "sha256-8mfY+nR+EPh07+x3dXbIiJ62l4R+fRDEYaMKiixT7n8=",
+        "lastModified": 1694101253,
+        "narHash": "sha256-xei+la6B7HMIekVs9nze7eQGQe3T0ehi89RuigMydCM=",
         "owner": "melange-re",
         "repo": "melange",
-        "rev": "65d1702e21fed1a700e8eafdfcafa54d85758115",
+        "rev": "e114ad55d185badeb32b3c766c9ab547495eac1b",
         "type": "github"
       },
       "original": {
@@ -93,29 +93,32 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1694063179,
-        "narHash": "sha256-Szt2GoEuiKU+SzhvkAhkOJyK8HJMUWvAhCRQOg9ISis=",
-        "type": "git",
-        "url": "file:///Users/anmonteiro/monorepo/nix-overlays"
+        "lastModified": 1694206061,
+        "narHash": "sha256-hXt2Kb3/VQ0WH1HPv5gltO2pKg5BJHezB7a23WU5DoA=",
+        "owner": "nix-ocaml",
+        "repo": "nix-overlays",
+        "rev": "2c5a5cd69202e22e7881529fe96552b80708be5d",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///Users/anmonteiro/monorepo/nix-overlays"
+        "owner": "nix-ocaml",
+        "repo": "nix-overlays",
+        "type": "github"
       }
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1693980916,
-        "narHash": "sha256-J7JJCpNiHbXb3D7pb1JkeOTUEpJJXiGI6BngfbnhiIM=",
+        "lastModified": 1694068030,
+        "narHash": "sha256-q21JdfZjK4XN5QwWTzCHF/G6uuZtwASNW9/ZBaak65M=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6485865ec300c7baf9e51ad5d64c30355ee511e7",
+        "rev": "9e26139b45147aadd25ab7ab3bc4a93d6d5e94e7",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6485865ec300c7baf9e51ad5d64c30355ee511e7",
+        "rev": "9e26139b45147aadd25ab7ab3bc4a93d6d5e94e7",
         "type": "github"
       }
     },
