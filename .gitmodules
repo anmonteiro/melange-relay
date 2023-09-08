@@ -1,4 +1,4 @@
 [submodule "melange-relay-compiler"]
-	path = relay
+	path = melange-relay-compiler
 	url = git@github.com:anmonteiro/relay.git
 	branch = melange-relay
