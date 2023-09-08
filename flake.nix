@@ -23,7 +23,7 @@
           })
           melange.overlays.default
         ];
-        inherit (pkgs) melange-relay-compiler nodejs_latest lib stdenv darwin;
+        inherit (pkgs) nodejs_latest lib stdenv darwin;
       in
       rec {
         packages = {
@@ -34,8 +34,6 @@
             src = ./.;
             nativeBuildInputs = [
               pkgs.ocamlPackages.melange
-
-              melange-relay-compiler
               reason
             ];
             nativeCheckInputs = [ nodejs_latest ];
@@ -66,6 +64,9 @@
             pkgs.libiconv
             darwin.apple_sdk.frameworks.Security
           ];
+          shellHook = ''
+            PATH=$PATH:$PWD/melange-relay-compiler/compiler/target/debug
+          '';
         };
       });
 }

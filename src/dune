@@ -1,7 +1,6 @@
 (library
  (public_name melange-relay)
  (name melange_relay)
- (wrapped false)
  (modes melange)
  (preprocess
   (pps melange.ppx reason-react-ppx))

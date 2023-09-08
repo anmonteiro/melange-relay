@@ -1,7 +1,7 @@
-open Melange_relay
+open Types
 
 let resolveNestedRecord
-    ~(rootRecord : Melange_relay.RecordProxy.t option)
+    ~(rootRecord : RecordProxy.t option)
     ~(path : string list)
   =
   let currentRecord = ref rootRecord in
@@ -15,7 +15,7 @@ let resolveNestedRecord
       | Some record, Some currentPath ->
         currentRecord :=
           record
-          |. Melange_relay.RecordProxy.getLinkedRecord ~name:currentPath ()
+          |. RecordProxy.getLinkedRecord ~name:currentPath ()
       | _ -> currentRecord := None
     done);
   currentRecord.contents
@@ -26,7 +26,7 @@ let resolveNestedRecordFromRoot ~store ~(path : string list) =
   | rootRecordPath :: [] ->
     (match
        store
-       |. Melange_relay.RecordSourceSelectorProxy.getRootField
+       |. RecordSourceSelectorProxy.getRootField
             ~fieldName:rootRecordPath
      with
     | Some rootRecord -> Some rootRecord
@@ -35,7 +35,7 @@ let resolveNestedRecordFromRoot ~store ~(path : string list) =
     resolveNestedRecord
       ~rootRecord:
         (store
-        |. Melange_relay.RecordSourceSelectorProxy.getRootField
+        |. RecordSourceSelectorProxy.getRootField
              ~fieldName:rootRecordPath)
       ~path:restPath
 
@@ -46,7 +46,7 @@ type nonrec insertAt =
 type nonrec connectionConfig =
   { parentID : dataId
   ; key : string
-  ; filters : Melange_relay.arguments option
+  ; filters : arguments option
   }
 
 let removeNodeFromConnections ~store ~node ~connections =

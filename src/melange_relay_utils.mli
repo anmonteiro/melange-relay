@@ -1,13 +1,15 @@
+open Types
+
 val resolveNestedRecord :
-   rootRecord:Melange_relay.RecordProxy.t option
+   rootRecord:RecordProxy.t option
   -> path:string list
-  -> Melange_relay.RecordProxy.t option
+  -> RecordProxy.t option
 (**Tries to return a record from a nested path of linked records.*)
 
 val resolveNestedRecordFromRoot :
-   store:Melange_relay.RecordSourceSelectorProxy.t
+   store:RecordSourceSelectorProxy.t
   -> path:string list
-  -> Melange_relay.RecordProxy.t option
+  -> RecordProxy.t option
 (**Tries to return a record from a nested path of linked records, starting from
    the root.*)
 
@@ -17,20 +19,20 @@ type nonrec insertAt =
   | End
 
 type nonrec connectionConfig =
-  { parentID : Melange_relay.dataId
+  { parentID : dataId
   ; key : string
-  ; filters : Melange_relay.arguments option
+  ; filters : arguments option
   }
 
 val removeNodeFromConnections :
-   store:Melange_relay.RecordSourceSelectorProxy.t
-  -> node:Melange_relay.RecordProxy.t
+   store:RecordSourceSelectorProxy.t
+  -> node:RecordProxy.t
   -> connections:connectionConfig list
   -> unit
 
 val createAndAddEdgeToConnections :
-   store:Melange_relay.RecordSourceSelectorProxy.t
-  -> node:Melange_relay.RecordProxy.t
+   store:RecordSourceSelectorProxy.t
+  -> node:RecordProxy.t
   -> connections:connectionConfig list
   -> edgeName:string
   -> insertAt:insertAt

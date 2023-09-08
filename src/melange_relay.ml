@@ -1,4 +1,5 @@
 include Types
+module ConnectionHandler = ConnectionHandler
 module RecordProxy = RecordProxy
 module RecordSourceSelectorProxy = RecordSourceSelectorProxy
 module MissingFieldHandler = MissingFieldHandler
@@ -85,59 +86,6 @@ module ReadOnlyRecordSourceProxy = struct
   [@@send] [@@return nullable]
 
   external getRoot : t -> RecordProxy.t = "getRoot" [@@send]
-end
-
-module ConnectionHandler = struct
-  external getConnection :
-     record:RecordProxy.t
-    -> key:string
-    -> ?filters:arguments
-    -> unit
-    -> RecordProxy.t option
-    = "getConnection"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"] [@@return nullable]
-
-  external createEdge :
-     store:RecordSourceSelectorProxy.t
-    -> connection:RecordProxy.t
-    -> node:RecordProxy.t
-    -> edgeType:string
-    -> RecordProxy.t
-    = "createEdge"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
-
-  external insertEdgeBefore :
-     connection:RecordProxy.t
-    -> newEdge:RecordProxy.t
-    -> ?cursor:string
-    -> unit
-    -> unit
-    = "insertEdgeBefore"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
-
-  external insertEdgeAfter :
-     connection:RecordProxy.t
-    -> newEdge:RecordProxy.t
-    -> ?cursor:string
-    -> unit
-    -> unit
-    = "insertEdgeAfter"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
-
-  external deleteNode :
-     connection:RecordProxy.t
-    -> nodeId:dataId
-    -> unit
-    = "deleteNode"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
-
-  external getConnectionID :
-     dataId
-    -> string
-    -> 'filters
-    -> dataId
-    = "getConnectionID"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
 end
 
 module Context = struct
@@ -249,3 +197,5 @@ external useSubscribeToInvalidationState :
   -> Disposable.t
   = "useSubscribeToInvalidationState"
 [@@module "react-relay"]
+
+module Internal = Internal

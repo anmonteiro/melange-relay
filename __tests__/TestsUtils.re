@@ -33,3 +33,7 @@ module Number = {
     | Some(_) => [||]
     };
 };
+
+[@mel.module "react"]
+external useTransition: unit => (bool, (unit => unit) => unit) =
+  "useTransition";
