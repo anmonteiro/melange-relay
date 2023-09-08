@@ -52,6 +52,7 @@
         defaultPackage = packages.native.piaf;
         devShells.default = pkgs.mkShell {
           inputsFrom = [ packages.default ];
+          nativeBuildInputs = with pkgs.ocamlPackages; [ ocamlformat merlin ];
         };
       });
 }
