@@ -52,52 +52,50 @@ type nonrec connectionConfig =
 let removeNodeFromConnections ~store ~node ~connections =
   connections
   |. Belt.List.forEach (fun connectionConfig ->
-         match
-           store
-           |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
+      match
+        store |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
+      with
+      | Some owner ->
+        (match
+           ConnectionHandler.getConnection
+             ~record:owner
+             ~key:connectionConfig.key
+             ?filters:connectionConfig.filters
+             ()
          with
-         | Some owner ->
-           (match
-              ConnectionHandler.getConnection
-                ~record:owner
-                ~key:connectionConfig.key
-                ?filters:connectionConfig.filters
-                ()
-            with
-           | Some connection ->
-             ConnectionHandler.deleteNode
-               ~connection
-               ~nodeId:(node |. RecordProxy.getDataId)
-           | None -> ())
-         | None -> ())
+        | Some connection ->
+          ConnectionHandler.deleteNode
+            ~connection
+            ~nodeId:(node |. RecordProxy.getDataId)
+        | None -> ())
+      | None -> ())
 
 let createAndAddEdgeToConnections ~store ~node ~connections ~edgeName ~insertAt =
   connections
   |. Belt.List.forEach (fun connectionConfig ->
-         match
-           store
-           |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
+      match
+        store |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
+      with
+      | Some connectionOwner ->
+        (match
+           ConnectionHandler.getConnection
+             ~record:connectionOwner
+             ~key:connectionConfig.key
+             ?filters:connectionConfig.filters
+             ()
          with
-         | Some connectionOwner ->
-           (match
-              ConnectionHandler.getConnection
-                ~record:connectionOwner
-                ~key:connectionConfig.key
-                ?filters:connectionConfig.filters
-                ()
-            with
-           | Some connection ->
-             let edge =
-               ConnectionHandler.createEdge
-                 ~store
-                 ~connection
-                 ~node
-                 ~edgeType:edgeName
-             in
-             (match insertAt with
-             | Start ->
-               ConnectionHandler.insertEdgeAfter ~connection ~newEdge:edge ()
-             | End ->
-               ConnectionHandler.insertEdgeBefore ~connection ~newEdge:edge ())
-           | None -> ())
-         | None -> ())
+        | Some connection ->
+          let edge =
+            ConnectionHandler.createEdge
+              ~store
+              ~connection
+              ~node
+              ~edgeType:edgeName
+          in
+          (match insertAt with
+          | Start ->
+            ConnectionHandler.insertEdgeAfter ~connection ~newEdge:edge ()
+          | End ->
+            ConnectionHandler.insertEdgeBefore ~connection ~newEdge:edge ())
+        | None -> ())
+      | None -> ())
