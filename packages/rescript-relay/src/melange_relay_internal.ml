@@ -2,7 +2,7 @@ let internal_keepMapFieldsRaw record f =
   record
   |. Obj.magic
   |. Belt.Option.map (fun obj ->
-         obj |. Js.Dict.entries |. Belt.Array.keepMap f |. Js.Dict.fromArray)
+      obj |. Js.Dict.entries |. Belt.Array.keepMap f |. Js.Dict.fromArray)
   |. Obj.magic
 
 (* we need to do this until we can use @obj on record types
@@ -10,16 +10,14 @@ let internal_keepMapFieldsRaw record f =
 let internal_cleanObjectFromUndefinedRaw record =
   match
     internal_keepMapFieldsRaw record (fun (key, value) ->
-        match[@ns.braces] value with
-        | Some value -> Some (key, value)
-        | None -> None)
+        match value with Some value -> Some (key, value) | None -> None)
   with
   | None -> [%raw {json|{}|json}]
   | Some v -> v
 
 let internal_removeUndefinedAndConvertNullsRaw record =
   internal_keepMapFieldsRaw record (fun (key, value) ->
-      match[@ns.braces] value, value = Some None with
+      match value, value = Some None with
       | Some value, _ -> Some (key, Js.Nullable.return value)
       | _, true -> Some (key, Js.Nullable.null)
       | None, _ -> None)

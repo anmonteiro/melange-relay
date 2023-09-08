@@ -12,95 +12,21 @@ let make ~loc ~moduleName =
        ; [%stri module Operation = [%m moduleIdentFromGeneratedModule []]]
        ; [%stri module Types = [%m moduleIdentFromGeneratedModule [ "Types" ]]]
        ; [%stri
-           type updaterFn =
-             Melange_relay.RecordSourceSelectorProxy.t
-             -> [%t typeFromGeneratedModule [ "Types"; "response" ]]
-             -> unit
-           [@@live]]
+           let convertVariables :
+                [%t typeFromGeneratedModule [ "Types"; "variables" ]]
+               -> [%t typeFromGeneratedModule [ "Types"; "variables" ]]
+             =
+             [%e valFromGeneratedModule [ "Internal"; "convertVariables" ]]]
        ; [%stri
-           type subscriptionConfig =
-             { subscription :
-                 [%t typeFromGeneratedModule [ "relayOperationNode" ]]
-                 Melange_relay.subscriptionNode
-             ; variables : [%t typeFromGeneratedModule [ "Types"; "variables" ]]
-             ; onCompleted : (unit -> unit) option [@optional]
-             ; onError : (Js.Exn.t -> unit) option [@optional]
-             ; onNext :
-                 ([%t typeFromGeneratedModule [ "Types"; "response" ]] -> unit) option
-                   [@optional]
-             ; updater : updaterFn option [@optional]
-             }
-           [@@deriving abstract] [@@live]]
-       ; [%stri
-           [%%private
-           external internal_requestSubscription :
-              Melange_relay.Environment.t
-             -> subscriptionConfig
-             -> Melange_relay.Disposable.t
-             = "requestSubscription"
-             [@@module "relay-runtime"] [@@live]]]
+           let convertResponse :
+                [%t typeFromGeneratedModule [ "Types"; "response" ]]
+               -> [%t typeFromGeneratedModule [ "Types"; "response" ]]
+             =
+             [%e valFromGeneratedModule [ "Internal"; "convertResponse" ]]]
        ; [%stri
            let subscribe =
-             (fun ~environment
-                  ~variables
-                  ?onCompleted
-                  ?onError
-                  ?onNext
-                  ?updater
-                  () ->
-                internal_requestSubscription
-                  environment
-                  (subscriptionConfig
-                     ~subscription:[%e valFromGeneratedModule [ "node" ]]
-                     ~variables:
-                       (variables
-                       |. [%e
-                            valFromGeneratedModule
-                              [ "Internal"; "convertVariables" ]])
-                     ?onCompleted
-                     ?onError
-                     ?onNext:
-                       (match onNext with
-                       | None -> None
-                       | Some onNext ->
-                         Some
-                           (fun r ->
-                             onNext
-                               (r
-                               |. [%e
-                                    valFromGeneratedModule
-                                      [ "Internal"; "convertResponse" ]])))
-                     ?updater:
-                       (match updater with
-                       | None -> None
-                       | Some updater ->
-                         Some
-                           (fun store r ->
-                             updater
-                               store
-                               (r
-                               |. [%e
-                                    valFromGeneratedModule
-                                      [ "Internal"; "convertResponse" ]])))
-                     ())
-               : environment:Melange_relay.Environment.t
-                 -> variables:
-                      [%t typeFromGeneratedModule [ "Types"; "variables" ]]
-                 -> ?onCompleted:(unit -> unit)
-                 -> ?onError:(Js.Exn.t -> unit)
-                 -> ?onNext:
-                      ([%t typeFromGeneratedModule [ "Types"; "response" ]]
-                       -> unit)
-                 -> ?updater:updaterFn
-                 -> unit
-                 -> Melange_relay.Disposable.t)
-             [@@ocaml.doc
-               "This sets up the subscription itself. You typically want to \
-                run this in a React.useEffect."]
-             [@@live]]
+             Melange_relay.Subscriptions.subscribe
+               ~convertVariables
+               ~convertResponse
+               ~node:[%e valFromGeneratedModule [ "node" ]]]
        ])
-  [@@ocaml.doc
-    "\n\
-    \ * Check out the comments for makeFragment, this does the same thing but \
-     for subscriptions.\n\
-    \ "]
