@@ -21,7 +21,7 @@ module Query = [%relay
 
 module SubFragment = [%relay
   {|
-    fragment TestFragment_sub_user on User @rescriptRelayIgnoreUnused {
+    fragment TestFragment_sub_user on User @melangeRelayIgnoreUnused {
       lastName
     }
 |}
@@ -51,7 +51,7 @@ module AllowUnsafeEnumFragment = [%relay
   {|
     fragment TestFragment_allowUnsafeEnum on User {
       firstName
-      onlineStatus @rescriptRelayAllowUnsafeEnum
+      onlineStatus @melangeRelayAllowUnsafeEnum
     }
 |}
 ];

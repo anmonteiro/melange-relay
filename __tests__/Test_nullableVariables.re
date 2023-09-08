@@ -10,7 +10,7 @@ module Query = [%relay
 
 module Mutation = [%relay
   {|
-    mutation TestNullableVariablesMutation($avatarUrl: String, $someInput: SomeInput) @rescriptRelayNullableVariables {
+    mutation TestNullableVariablesMutation($avatarUrl: String, $someInput: SomeInput) @melangeRelayNullableVariables {
       updateUserAvatar(avatarUrl: $avatarUrl) {
         user {
           avatarUrl

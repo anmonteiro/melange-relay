@@ -36,8 +36,8 @@ type relayOperationNode
 type operationType = relayOperationNode Melange_relay.fragmentNode
 
 
-[%%private let makeNode rescript_module_TestRelayUserResolver: operationType = 
-  ignore rescript_module_TestRelayUserResolver;
+[%%private let makeNode ocaml_module_TestRelayUserResolver: operationType = 
+  ignore ocaml_module_TestRelayUserResolver;
   [%raw {json|{
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -61,7 +61,7 @@ type operationType = relayOperationNode Melange_relay.fragmentNode
       },
       "kind": "RelayResolver",
       "name": "fullName",
-      "resolverModule": rescript_module_TestRelayUserResolver,
+      "resolverModule": ocaml_module_TestRelayUserResolver,
       "path": "fullName"
     }
   ],
