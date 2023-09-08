@@ -5,15 +5,16 @@ type nonrec arguments
 type nonrec uploadables
 (** Abstract type for uploadables.
 
-### Constructing an `uploadables`
-Use `makeUploadable`: `makeUploadable({ "someFile": theFileYouWantToUpload
-   })` to construct an `uploadables`, and then pass it to your mutation via the
-   `uploadables` prop.
+    Constructing an `uploadables`: Use [makeUploadable]:
+    [makeUploadable [%mel.obj { someFile = theFileYouWantToUpload }]] to
+    construct an `uploadables`, and then pass it to your mutation via the
+    `uploadables` prop.
 
-Please note that you'll need to handle _sending_ the uploadables to your
-   server yourself in the network layer. [Here's an
+    Please note that you'll need to handle _sending_ the uploadables to your
+    server yourself in the network layer.
+    [Here's an
    example](https://github.com/facebook/relay/issues/1844#issuecomment-316893590)
-   in regular JS that you can adapt to ReScript as you need/want.*)
+    in regular JS that you can adapt to ReScript as you need/want. *)
 
 type nonrec allFieldsMasked = < > Js.t
 (** If you see this, it means that all fields have been masked in this
@@ -59,11 +60,8 @@ external makeDataId : string -> dataId = "%identity"
 external makeArguments : < .. > Js.t -> arguments = "%identity"
 (** Construct an `arguments` object for use with certain Relay store APIs.
 
-### Usage
-Use it like this: `makeArguments({ "someArgument": someValue,
-   "anotherArgument": anotherValue })`. Notice the "" surrounding the property
-   names - these are important and tells ReScript that we want this to be a JS
-   object.*)
+    Usage: Use it like this:
+    [makeArguments [%mel.obj { someArgument = someValue, anotherArgument= anotherValue }]]. *)
 
 external makeUploadables : 'file Js.Dict.t -> uploadables = "%identity"
 (** Construct an `uploadables` object from a `Js.Dict` with your desired file

@@ -1,13 +1,13 @@
 include ReactDOM.Experimental
 
 external createRoot : Dom.element -> root = "createRoot"
-  [@@mel.module "react-dom/client"]
+[@@mel.module "react-dom/client"]
 
 external getElementById :
    string
   -> Dom.element option
   = "document.getElementById"
-  [@@mel.val] [@@mel.return nullable]
+[@@mel.return nullable]
 
 let renderConcurrentRootAtElementWithId : React.element -> string -> unit =
  fun content id ->
