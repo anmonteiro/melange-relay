@@ -80,7 +80,7 @@ external generateClientID :
   -> unit
   -> dataId
   = "generateClientID"
-  [@@module "relay-runtime"]
+[@@module "relay-runtime"]
 (** This generates a `dataId` for use on the _client_ side. However, this is
     farily low level, and what you're probably really looking for is
     `generateUniqueClientID` that'll let you generate a new, unique `dataId`
@@ -88,13 +88,13 @@ external generateClientID :
     updates).*)
 
 external generateUniqueClientID : unit -> dataId = "generateUniqueClientID"
-  [@@module "relay-runtime"]
+[@@module "relay-runtime"]
 (** This generates a unique `dataId` that's safe to use on the _client_ side.
     Useful when doing optimistic updates and you need to create IDs that the
     optimistic update can use.*)
 
 external isClientID : dataId -> bool = "isClientID"
-  [@@module "relay-runtime"]
+[@@module "relay-runtime"]
 (** Checks whether the provided `dataId` is guaranteed to be a client side only
     id.*)
 
@@ -132,7 +132,7 @@ type nonrec featureFlags =
     enable/disable features.*)
 
 external relayFeatureFlags : featureFlags = "RelayFeatureFlags"
-  [@@module "relay-runtime"]
+[@@module "relay-runtime"]
 (** Relay feature flags. Mutate this record as soon as your application boots to
     enable/disable features.*)
 
@@ -142,15 +142,6 @@ type nonrec recordSourceRecords = Js.Json.t
 
     See `RecordSource.toJSON` for how to produce it.*)
 
-external storeRootId : dataId = "ROOT_ID"
-  [@@module "relay-runtime"]
-(** The `dataId` for the Relay store's root. Useful when for example referencing
-    the `parentID` of a connection that's on the store root.*)
-
-external storeRootType : string = "ROOT_TYPE"
-  [@@module "relay-runtime"]
-(** The `type` for the Relay store's root `RecordProxy`.*)
-
 external convertObj :
    'a
   -> string Js.Dict.t Js.Dict.t Js.Dict.t
@@ -158,7 +149,7 @@ external convertObj :
   -> 'c
   -> 'd
   = "traverser"
-  [@@module "./utils"]
+[@@module "./utils"]
 (** Internal, do not use.*)
 
 (** Read the following section on working with the Relay store:
@@ -169,11 +160,11 @@ module RecordProxy : sig
       https://relay.dev/docs/en/relay-store*)
 
   external copyFieldsFrom : t -> sourceRecord:t -> unit = "copyFieldsFrom"
-    [@@send]
+  [@@send]
   (** Copies all fields from one `RecordProxy` to another.*)
 
   external getDataId : t -> dataId = "getDataID"
-    [@@send]
+  [@@send]
   (** Gets the \`dataId\` for a particular record.*)
 
   external getLinkedRecord :
@@ -183,7 +174,7 @@ module RecordProxy : sig
     -> unit
     -> t option
     = "getLinkedRecord"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Gets a single linked record. A linked record is another object in the
       store, and not a scalar field like an int or float.*)
 
@@ -204,12 +195,12 @@ module RecordProxy : sig
     -> unit
     -> t
     = "getOrCreateLinkedRecord"
-    [@@send]
+  [@@send]
   (** This returns an existing linked record, or creates one at the configured
       place if one does not already exist.*)
 
   external getType : t -> string = "getType"
-    [@@send]
+  [@@send]
   (** Returns the `__typename` of this particular record.*)
 
   external getValueString :
@@ -219,7 +210,7 @@ module RecordProxy : sig
     -> unit
     -> string option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be a string.*)
 
   external getValueStringArray :
@@ -229,7 +220,7 @@ module RecordProxy : sig
     -> unit
     -> string option array option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be an array of strings.*)
 
   external getValueInt :
@@ -239,7 +230,7 @@ module RecordProxy : sig
     -> unit
     -> int option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be an int.*)
 
   external getValueIntArray :
@@ -249,7 +240,7 @@ module RecordProxy : sig
     -> unit
     -> int option array option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be an array of ints.*)
 
   external getValueFloat :
@@ -259,7 +250,7 @@ module RecordProxy : sig
     -> unit
     -> float option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be a float.*)
 
   external getValueFloatArray :
@@ -269,7 +260,7 @@ module RecordProxy : sig
     -> unit
     -> float option array option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be an array of floats.*)
 
   external getValueBool :
@@ -279,7 +270,7 @@ module RecordProxy : sig
     -> unit
     -> bool option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be a boolean.*)
 
   external getValueBoolArray :
@@ -289,7 +280,7 @@ module RecordProxy : sig
     -> unit
     -> bool option array option
     = "getValue"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns a field value, expecting it to be an array of booleans.*)
 
   external setLinkedRecord :
@@ -300,7 +291,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setLinkedRecord"
-    [@@send]
+  [@@send]
   (** Sets a `RecordProxy.t` as the linked record for a particular field.*)
 
   external setLinkedRecords :
@@ -311,7 +302,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setLinkedRecords"
-    [@@send]
+  [@@send]
   (** Sets an array of `RecordProxy.t` as the linked records for a particular
       field.*)
 
@@ -323,7 +314,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets a string as field value.*)
 
   external setValueStringArray :
@@ -334,7 +325,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets an array of strings as field value.*)
 
   external setValueInt :
@@ -345,7 +336,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets an int as field value.*)
 
   external setValueIntArray :
@@ -356,7 +347,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets an array of ints as field value.*)
 
   external setValueFloat :
@@ -367,7 +358,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets a float as field value.*)
 
   external setValueFloatArray :
@@ -378,7 +369,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets an array of floats as field value.*)
 
   external setValueBool :
@@ -389,7 +380,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets a boolean as field value.*)
 
   external setValueBoolArray :
@@ -400,7 +391,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets an array of booleans as field value.*)
 
   external setValueToUndefined :
@@ -411,7 +402,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets the field value to `undefined` (meaning Relay will treat it as
       missing data).*)
 
@@ -423,7 +414,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets the field value to `null`.*)
 
   external setLinkedRecordToUndefined :
@@ -434,7 +425,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets this linked record to `undefined` (meaning Relay will treat it as
       missing data).*)
 
@@ -446,7 +437,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets this linked record to `null`.*)
 
   external setLinkedRecordsToUndefined :
@@ -457,7 +448,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets the field holding these linked records to `undefined` (meaning Relay
       will treat it as missing data).*)
 
@@ -469,11 +460,11 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-    [@@send]
+  [@@send]
   (** Sets the field holding these linked records to `null`.*)
 
   external invalidateRecord : t -> unit = "invalidateRecord"
-    [@@send]
+  [@@send]
   (** Invalidates this record.
 
       Invalidating a record means that the _next_ time Relay evaluates this
@@ -498,19 +489,19 @@ module RecordSourceSelectorProxy : sig
     -> typeName:string
     -> RecordProxy.t
     = "create"
-    [@@send]
+  [@@send]
   (** Creates a new `RecordProxy`.*)
 
   external delete : t -> dataId:dataId -> unit = "delete"
-    [@@send]
+  [@@send]
   (** Deletes the `RecordProxy` with the provided `dataId`.*)
 
   external get : t -> dataId:dataId -> RecordProxy.t option = "get"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns the `RecordProxy` with the provided `dataId`, if it exists.*)
 
   external getRoot : t -> RecordProxy.t = "getRoot"
-    [@@send]
+  [@@send]
   (** Returns the _root_ `RecordProxy`, meaning the `RecordProxy` holding your
       top level fields.*)
 
@@ -519,7 +510,7 @@ module RecordSourceSelectorProxy : sig
     -> fieldName:string
     -> RecordProxy.t option
     = "getRootField"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns the `RecordProxy` for the `fieldName` at root. You should prefer
       using `RecordSourceSelectorProxy.getRoot()` and traverse from there if you
       need access to root fields rather than use this.*)
@@ -531,7 +522,7 @@ module RecordSourceSelectorProxy : sig
   (** Plural version of `RecordSourceSelectorProxy.getRootField`.*)
 
   external invalidateStore : t -> unit = "invalidateStore"
-    [@@send]
+  [@@send]
   (** Invalidates the entire store. This means that _at the next render_, the
       entire store will be treated as empty, meaning Relay will refetch
       everything it needs to show the view it's to show.*)
@@ -543,11 +534,11 @@ module ReadOnlyRecordSourceProxy : sig
   (** Type type representing a `ReadOnlyRecordSourceProxy`.*)
 
   external get : t -> dataId:dataId -> RecordProxy.t option = "get"
-    [@@send] [@@return nullable]
+  [@@send] [@@return nullable]
   (** Returns the `RecordProxy` with the provided `dataId`, if it exists.*)
 
   external getRoot : t -> RecordProxy.t = "getRoot"
-    [@@send]
+  [@@send]
   (** Returns the _root_ `RecordProxy`, meaning the `RecordProxy` holding your
       top level fields.*)
 end
@@ -673,7 +664,7 @@ module ConnectionHandler : sig
     -> unit
     -> RecordProxy.t option
     = "getConnection"
-    [@@module "relay-runtime"] [@@scope "ConnectionHandler"] [@@return nullable]
+  [@@module "relay-runtime"] [@@scope "ConnectionHandler"] [@@return nullable]
   (** For a `RecordProxy`, returns the `RecordProxy` that is at the connection
       config provided.*)
 
@@ -684,7 +675,7 @@ module ConnectionHandler : sig
     -> edgeType:string
     -> RecordProxy.t
     = "createEdge"
-    [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
   (** Creates an edge for a particular connection.*)
 
   external insertEdgeBefore :
@@ -694,7 +685,7 @@ module ConnectionHandler : sig
     -> unit
     -> unit
     = "insertEdgeBefore"
-    [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
   (** Inserts an edge into a connection _before_ the provided cursor. If no
       cursor is provided, it inserts the edge at the start of the connection
       list.*)
@@ -706,7 +697,7 @@ module ConnectionHandler : sig
     -> unit
     -> unit
     = "insertEdgeAfter"
-    [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
   (** Inserts an edge into a connection _after_ the provided cursor. If no
       cursor is provided, it inserts the edge at the end of the connection list.*)
 
@@ -715,7 +706,7 @@ module ConnectionHandler : sig
     -> nodeId:dataId
     -> unit
     = "deleteNode"
-    [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
   (** Deletes any edge from the connection where the node of the edge has the
       provided `dataId`. Please not that this _will not_ remove the actual node
       from the store. Use `RecordSourceSelectorProxy.delete` for that.*)
@@ -726,11 +717,11 @@ module ConnectionHandler : sig
     -> 'filters
     -> dataId
     = "getConnectionID"
-    [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
   (** Constructs a `dataId` targeting a specific connection at a specific
       parent. Note that the generated module for every fragment with a
-      `\@connection` will have a `<moduleName>.Utils.connectionKey` representing
-      the connection key of that particular `\@connection`, that you should use
+      `@connection` will have a `<moduleName>.Utils.connectionKey` representing
+      the connection key of that particular `@connection`, that you should use
       with this.*)
 end
 
@@ -746,7 +737,7 @@ type nonrec cacheConfig =
 
 (** A Relay observable, used throughout Relay for delivering data, in particular
     when dealing with multiple payloads like with subscriptions or multipart
-    responses like `\@stream` or `\@defer`.*)
+    responses like `@stream` or `@defer`.*)
 module Observable : sig
   type nonrec 'response t
   (** The type representing the observable.*)
@@ -777,24 +768,27 @@ module Observable : sig
     -> unit
     -> 'response observer
     = ""
-    [@@obj]
+  [@@obj]
   (** Create an observer.*)
 
   external make : ('t sink -> subscription option) -> 't t = "create"
-    [@@module "relay-runtime"] [@@scope "Observable"]
+  [@@module "relay-runtime"] [@@scope "Observable"]
   (** Create a new observable, getting fed an `Observable.sink` for interacting
       with the observable, and optionally returning a `Observable.subscription`
       if you have things you want to unsubscribe from as the observable closes.*)
 
   external subscribe : 't t -> 't observer -> subscription = "subscribe"
-    [@@send]
+  [@@send]
   (** Subscribe to the `Observable.t` using an observer.*)
 
   external toPromise : 't t -> 't Js.Promise.t = "toPromise"
-    [@@send]
+  [@@send]
   (** Turns an `Observable` into a promise. _Beware_ that reading the response
       in the resulting promise is currently _not safe_ due to some internals of
       how ReScript Relay works. This will be resolved in the future.*)
+
+  external ignoreSubscription : subscription -> unit = "%ignore"
+  (**Ignore this subscription.*)
 end
 
 (** Represents the network layer.*)
@@ -840,7 +834,7 @@ module Network : sig
     -> unit
     -> t
     = "create"
-    [@@module "relay-runtime"] [@@scope "Network"]
+  [@@module "relay-runtime"] [@@scope "Network"]
   (** Create a new `NetworkLayer` using a fetch function that returns a promise.*)
 
   external makeObservableBased :
@@ -849,7 +843,7 @@ module Network : sig
     -> unit
     -> t
     = "create"
-    [@@module "relay-runtime"] [@@scope "Network"]
+  [@@module "relay-runtime"] [@@scope "Network"]
   (** Create a new `NetworkLayer` using a fetch function that returns an
       `Observable`.*)
 end
@@ -861,13 +855,13 @@ module RecordSource : sig
   (** The type representing an instantiated `RecordSource`.*)
 
   external make : ?records:recordSourceRecords -> unit -> t = "RecordSource"
-    [@@module "relay-runtime"] [@@new]
+  [@@module "relay-runtime"] [@@new]
   (** Create a new `RecordSource`. Here's where you pass an existing
       `recordSourceRecords` if you have existing records you want to hydrate the
       store with, when doing SSR or similar.*)
 
   external toJSON : t -> recordSourceRecords = "toJSON"
-    [@@send]
+  [@@send]
   (** Serializes the `RecordSource` into `recordSourceRecords` that you can use
       to rehydrate another store. Typically used for SSR.*)
 end
@@ -886,11 +880,11 @@ module Store : sig
   (** Creates a new `Store`.*)
 
   external getSource : t -> RecordSource.t = "getSource"
-    [@@send]
+  [@@send]
   (** Gets the `RecordSource` for this `Store`.*)
 
   external publish : t -> RecordSource.t -> unit = "publish"
-    [@@send]
+  [@@send]
   (** Publishes _new_ records to this store. This is useful in particular with
       frameworks like Next.js where routes could preload data needed and then
       serialize that (using `RecordSource.toJSON`) and send it over the wire,
@@ -898,10 +892,19 @@ module Store : sig
       allow you to publish those records into your existing store.*)
 
   external holdGC : t -> unit = "holdGC"
-    [@@send]
+  [@@send]
   (** Informes the store to stop its normal garbage collection processes. This
       prevents data being lost between calling relay's `fetchQuery` any
       serialization process (eg: toJSON)*)
+
+  external storeRootId : dataId = "ROOT_ID"
+  [@@module "relay-runtime"]
+  (** The `dataId` for the Relay store's root. Useful when for example
+      referencing the `parentID` of a connection that's on the store root.*)
+
+  external storeRootType : string = "ROOT_TYPE"
+  [@@module "relay-runtime"]
+  (** The `type` for the Relay store's root `RecordProxy`.*)
 end
 
 type nonrec operationDescriptor
@@ -914,7 +917,7 @@ module Disposable : sig
   (** The type representing a `Disposable`.*)
 
   external dispose : t -> unit = "dispose"
-    [@@send]
+  [@@send]
   (** Dispose the `Disposable`.*)
 
   external ignore : t -> unit = "%ignore"
@@ -957,7 +960,7 @@ module Environment : sig
   (** Create a new `Environment`.*)
 
   external getStore : t -> Store.t = "getStore"
-    [@@send]
+  [@@send]
   (** Get the `Store` for this `Environment`.*)
 
   external commitPayload :
@@ -966,39 +969,41 @@ module Environment : sig
     -> 'payload
     -> unit
     = "commitPayload"
-    [@@send]
+  [@@send]
   (** Given an `operationDescriptor`, commits the corresponding payload.*)
 
   external retain : t -> operationDescriptor -> Disposable.t = "retain"
-    [@@send]
+  [@@send]
   (** Given an `operationDescriptor`, retains the corresponding operation so any
       data referenced by it isn't garbage collected. You should use the
       generated `Query.retain` function on your queries instead of using this
       directly.*)
 end
 
-(** fetchPolicy controls how you want Relay to resolve your data.*)
-type nonrec fetchPolicy =
-  | StoreOnly (* Resolve only from the store *)
-  | StoreOrNetwork
-    (* Resolve from the store if all data is there, otherwise make a network
-       request *)
-  | StoreAndNetwork
-    (* Like StoreOrNetwork, but always make a request regardless of if the data
-       was there initially or not *)
-  | NetworkOnly (* Always make a request, regardless of what's in the store *)
+module FetchPolicy : sig
+  (** fetchPolicy controls how you want Relay to resolve your data.*)
+  type nonrec t =
+    | StoreOnly (* Resolve only from the store *)
+    | StoreOrNetwork
+      (* Resolve from the store if all data is there, otherwise make a network
+         request *)
+    | StoreAndNetwork
+      (* Like StoreOrNetwork, but always make a request regardless of if the
+         data was there initially or not *)
+    | NetworkOnly (* Always make a request, regardless of what's in the store *)
 
-val mapFetchPolicy : fetchPolicy option -> string option
-(** Internal, do not use.*)
+  val map : t option -> string option
+  (** Internal, do not use.*)
 
-(** The fetch policies allowed for fetching a query outside of React's render
-    (as in `Query.fetch`).*)
-type nonrec fetchQueryFetchPolicy =
-  | NetworkOnly
-  | StoreOrNetwork
+  (** The fetch policies allowed for fetching a query outside of React's render
+      (as in `Query.fetch`).*)
+  type nonrec fetchQueryFetchPolicy =
+    | NetworkOnly
+    | StoreOrNetwork
 
-val mapFetchQueryFetchPolicy : fetchQueryFetchPolicy option -> string option
-(** Internal, do not use.*)
+  val mapFetchQueryFetchPolicy : fetchQueryFetchPolicy option -> string option
+  (** Internal, do not use.*)
+end
 
 type nonrec mutationError = { message : string }
 (** An error from a mutation.*)
@@ -1012,7 +1017,7 @@ module Context : sig
   (** The expected shape of the context.*)
 
   external context : contextShape option React.Context.t = "ReactRelayContext"
-    [@@module "react-relay"]
+  [@@module "react-relay"]
   (** The actual React context coming from Relay.*)
 
   (** The context provider you wrap your app in and pass your `Environment` for
@@ -1022,7 +1027,7 @@ module Context : sig
        environment:Environment.t
       -> children:React.element
       -> React.element
-      [@@react.component]
+    [@@react.component]
     (** The React component you wrap your app in and pass your `Environment` for
         Relay to work.*)
   end
@@ -1044,7 +1049,7 @@ external commitLocalUpdate :
   -> updater:(RecordSourceSelectorProxy.t -> unit)
   -> unit
   = "commitLocalUpdate"
-  [@@module "relay-runtime"]
+[@@module "relay-runtime"]
 (** A way of committing a local update to the store.*)
 
 external useSubscribeToInvalidationState :
@@ -1052,7 +1057,7 @@ external useSubscribeToInvalidationState :
   -> (unit -> unit)
   -> Disposable.t
   = "useSubscribeToInvalidationState"
-  [@@module "react-relay"]
+[@@module "react-relay"]
 (** Allows you to subscribe to when a record, connection, or even the store
     itself is invalidated, and then react to that.*)
 
@@ -1077,7 +1082,7 @@ module MakeLoadQuery : functor (C : MakeLoadQueryConfig) -> sig
   val load :
      environment:Environment.t
     -> variables:C.variables
-    -> ?fetchPolicy:fetchPolicy
+    -> ?fetchPolicy:FetchPolicy.t
     -> ?fetchKey:string
     -> ?networkCacheConfig:cacheConfig
     -> unit
@@ -1088,4 +1093,221 @@ module MakeLoadQuery : functor (C : MakeLoadQueryConfig) -> sig
   val queryRefToPromise :
      C.loadedQueryRef
     -> (unit, unit) Belt.Result.t Js.Promise.t
+end
+
+module Mutation : sig
+  type nonrec 'response updaterFn =
+    RecordSourceSelectorProxy.t -> 'response -> unit
+
+  type nonrec optimisticUpdaterFn = RecordSourceSelectorProxy.t -> unit
+
+  val commitMutation :
+     convertVariables:('variables -> 'variables)
+    -> node:'a mutationNode
+    -> convertResponse:('response -> 'response)
+    -> convertWrapRawResponse:('rawResponse -> 'rawResponse)
+    -> environment:Environment.t
+    -> variables:'variables
+    -> ?optimisticUpdater:optimisticUpdaterFn
+    -> ?optimisticResponse:'rawResponse
+    -> ?updater:'response updaterFn
+    -> ?onCompleted:('response -> mutationError array option -> unit)
+    -> ?onError:(mutationError -> unit)
+    -> ?uploadables:uploadables
+    -> unit
+    -> Disposable.t
+
+  val useMutation :
+     convertVariables:('variables -> 'variables)
+    -> node:'m
+    -> convertResponse:('response -> 'response)
+    -> convertWrapRawResponse:('rawResponse -> 'rawResponse)
+    -> unit
+    -> (variables:'variables
+        -> ?optimisticUpdater:optimisticUpdaterFn
+        -> ?optimisticResponse:'rawResponse
+        -> ?updater:'response updaterFn
+        -> ?onCompleted:('response -> mutationError array option -> unit)
+        -> ?onError:(mutationError -> unit)
+        -> ?uploadables:uploadables
+        -> unit
+        -> Disposable.t)
+       * bool
+end
+
+module Query : sig
+  val useQuery :
+     convertVariables:('variables -> 'variables)
+    -> node:'a queryNode
+    -> convertResponse:('response -> 'response)
+    -> variables:'variables
+    -> ?fetchPolicy:FetchPolicy.t
+    -> ?fetchKey:string
+    -> ?networkCacheConfig:cacheConfig
+    -> unit
+    -> 'response
+
+  val useLoader :
+     convertVariables:('variables -> 'variables)
+    -> node:'a queryNode
+    -> mkQueryRef:('queryRef option -> 'queryRef option)
+    -> unit
+    -> 'queryRef option
+       * (variables:'variables
+          -> ?fetchPolicy:FetchPolicy.t
+          -> ?networkCacheConfig:cacheConfig
+          -> unit
+          -> unit)
+       * (unit -> unit)
+
+  val usePreloaded :
+     node:'a queryNode
+    -> convertResponse:('response -> 'response)
+    -> mkQueryRef:('queryRef -> 'queryRef)
+    -> queryRef:'queryRef
+    -> 'response
+
+  val fetch :
+     node:'a queryNode
+    -> convertResponse:('response -> 'response)
+    -> convertVariables:('variables -> 'variables)
+    -> environment:Environment.t
+    -> variables:'variables
+    -> onResult:(('response, Js.Exn.t) result -> unit)
+    -> ?networkCacheConfig:cacheConfig
+    -> ?fetchPolicy:FetchPolicy.t
+    -> unit
+    -> unit
+
+  val fetchPromised :
+     node:'a queryNode
+    -> convertResponse:('response -> 'response)
+    -> convertVariables:('variables -> 'variables)
+    -> environment:Environment.t
+    -> variables:'variables
+    -> ?networkCacheConfig:cacheConfig
+    -> ?fetchPolicy:FetchPolicy.t
+    -> unit
+    -> 'response Js.Promise.t
+
+  val retain :
+     node:'a queryNode
+    -> convertVariables:('variables -> 'variables)
+    -> environment:Environment.t
+    -> variables:'variables
+    -> Disposable.t
+
+  val commitLocalPayload :
+     node:'a queryNode
+    -> convertVariables:('variables -> 'variables)
+    -> convertWrapRawResponse:('rawResponse -> 'rawResponse)
+    -> environment:Environment.t
+    -> variables:'variables
+    -> payload:'rawResponse
+    -> unit
+end
+
+module Fragment : sig
+  val useFragment :
+     node:'a fragmentNode
+    -> convertFragment:('fragment -> 'fragment)
+    -> fRef:'b
+    -> 'fragment
+
+  val useFragmentOpt :
+     fRef:'a option
+    -> node:'b fragmentNode
+    -> convertFragment:('fragment -> 'fragment)
+    -> 'fragment option
+
+  val readInlineData :
+     node:'a fragmentNode
+    -> convertFragment:('fragment -> 'fragment)
+    -> fRef:'b
+    -> 'fragment
+
+  type nonrec paginationLoadMoreFn =
+    count:int -> ?onComplete:(Js.Exn.t option -> unit) -> unit -> Disposable.t
+
+  type nonrec ('fragment, 'refetchVariables) paginationFragmentReturn =
+    { data : 'fragment
+    ; loadNext : paginationLoadMoreFn
+    ; loadPrevious : paginationLoadMoreFn
+    ; hasNext : bool
+    ; hasPrevious : bool
+    ; isLoadingNext : bool
+    ; isLoadingPrevious : bool
+    ; refetch :
+        variables:'refetchVariables
+        -> ?fetchPolicy:FetchPolicy.t
+        -> ?onComplete:(Js.Exn.t option -> unit)
+        -> unit
+        -> Disposable.t
+    }
+
+  val usePaginationFragment :
+     node:'a fragmentNode
+    -> fRef:'b
+    -> convertFragment:('fragment -> 'fragment)
+    -> convertRefetchVariables:('refetchVariables -> 'refetchVariables)
+    -> ('fragment, 'refetchVariables) paginationFragmentReturn
+
+  type nonrec ('fragment, 'refetchVariables) paginationBlockingFragmentReturn =
+    { data : 'fragment
+    ; loadNext : paginationLoadMoreFn
+    ; loadPrevious : paginationLoadMoreFn
+    ; hasNext : bool
+    ; hasPrevious : bool
+    ; refetch :
+        variables:'refetchVariables
+        -> ?fetchPolicy:FetchPolicy.t
+        -> ?onComplete:(Js.Exn.t option -> unit)
+        -> unit
+        -> Disposable.t
+    }
+
+  val useBlockingPaginationFragment :
+     node:'a fragmentNode
+    -> fRef:'b
+    -> convertFragment:('fragment -> 'fragment)
+    -> convertRefetchVariables:('refetchVariables -> 'refetchVariables)
+    -> ('fragment, 'refetchVariables) paginationBlockingFragmentReturn
+
+  val useRefetchableFragment :
+     node:'a fragmentNode
+    -> convertFragment:('fragment -> 'fragment)
+    -> convertRefetchVariables:('refetchVariables -> 'refetchVariables)
+    -> fRef:'b
+    -> 'fragment
+       * (variables:'refetchVariables
+          -> ?fetchPolicy:FetchPolicy.t
+          -> ?onComplete:(Js.Exn.t option -> unit)
+          -> unit
+          -> Disposable.t)
+end
+
+module RelayResolvers : sig
+  type nonrec ('fragment, 't) resolver = 'fragment -> 't option
+  type relayResolver
+
+  val makeRelayResolver :
+     node:'a fragmentNode
+    -> convertFragment:('fragment -> 'fragment)
+    -> ('fragment, 't) resolver
+    -> relayResolver
+end
+
+module Subscriptions : sig
+  val subscribe :
+     node:'a subscriptionNode
+    -> convertVariables:('variables -> 'variables)
+    -> convertResponse:('response -> 'response)
+    -> environment:Environment.t
+    -> variables:'variables
+    -> ?onCompleted:(unit -> unit)
+    -> ?onError:(Js.Exn.t -> unit)
+    -> ?onNext:('response -> unit)
+    -> ?updater:(RecordSourceSelectorProxy.t -> 'response -> unit)
+    -> unit
+    -> Disposable.t
 end
