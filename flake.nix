@@ -23,7 +23,7 @@
           })
           melange.overlays.default
         ];
-        inherit (pkgs) melange-relay-compiler nodejs_latest;
+        inherit (pkgs) melange-relay-compiler nodejs_latest lib stdenv darwin;
       in
       rec {
         packages = {
@@ -52,7 +52,20 @@
         defaultPackage = packages.native.piaf;
         devShells.default = pkgs.mkShell {
           inputsFrom = [ packages.default ];
-          nativeBuildInputs = with pkgs.ocamlPackages; [ ocamlformat merlin ];
+          nativeBuildInputs = with pkgs; [
+            pkg-config
+            yarn
+            cargo
+            nodejs_latest
+            rustfmt
+          ] ++ (with pkgs.ocamlPackages; [
+            ocamlformat
+            merlin
+          ]);
+          propagatedBuildInputs = lib.optionals stdenv.isDarwin [
+            pkgs.libiconv
+            darwin.apple_sdk.frameworks.Security
+          ];
         };
       });
 }

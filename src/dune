@@ -1,0 +1,10 @@
+(library
+ (public_name melange-relay)
+ (name melange_relay)
+ (wrapped false)
+ (modes melange)
+ (preprocess
+  (pps melange.ppx reason-react-ppx))
+ (libraries reason-react)
+ (melange.compile_flags -w -61-69)
+ (melange.runtime_deps ./utils.js))

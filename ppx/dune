@@ -1,0 +1,8 @@
+(library
+ (name melange_relay_ppx)
+ (public_name melange-relay.ppx)
+ (libraries ppxlib graphql_parser str)
+ (kind ppx_rewriter)
+ (preprocess
+  (pps ppxlib.metaquot))
+ (flags :standard -w -9-27))

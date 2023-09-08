@@ -1,0 +1,25 @@
+(dirs :standard __tests__)
+
+(subdir
+ __tests__
+ (dirs :standard __generated__)
+ (include_subdirs unqualified)
+ (library
+  (name tests)
+  (modes melange)
+  (preprocess
+   (pps melange.ppx reason-react-ppx melange-relay.ppx))
+  (libraries reason-react melange-relay melange-fetch)
+  (melange.compile_flags :standard -w -9-34-61-69)
+  (melange.runtime_deps
+   jestSetup.js
+   queryMock.js
+   (glob_files *-tests.js))))
+
+(melange.emit
+ (target tests)
+ (libraries tests)
+ (alias meltest)
+ (promote (until-clean))
+ (module_systems
+  (commonjs bs.js)))

@@ -1,5 +1,0 @@
-(executable
- (package melange-relay)
- (name ppx)
- (public_name ppx)
- (libraries melange-relay.ppx ppxlib))

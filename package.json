@@ -1,0 +1,68 @@
+{
+  "name": "rescript-relay",
+  "version": "1.1.1",
+  "main": "src/RescriptRelay.res",
+  "license": "MIT",
+  "author": "Gabriel Nordeborn",
+  "sideEffects": false,
+  "repository": "https://github.com/zth/rescript-relay",
+  "description": "Use Relay with ReScript.",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "graphql",
+    "relay",
+    "relaymodern",
+    "react",
+    "reason",
+    "reasonml",
+    "rescript"
+  ],
+  "exports": {
+    "./src/utils": {
+      "require": "./src/utils.js",
+      "import": "./src/utils.mjs"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "rescript-relay-compiler": "compiler.js",
+    "rescript-relay-cli": "cli/cli.js"
+  },
+  "scripts": {
+    "build": "rescript build -with-deps",
+    "build:test": "./build-compiler-dev.sh && ./rescript-relay-compiler",
+    "test": "jest",
+    "test:ci": "jest --ci --runInBand"
+  },
+  "devDependencies": {
+    "rescript": "^10.0.0",
+    "@rescript/react": "0.10.3",
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/react": "^13.0.0-alpha.6",
+    "bs-fetch": "^0.5.0",
+    "graphql-query-test-mock": "^0.12.1",
+    "jest": "^27.2.4",
+    "nock": "^11.7.0",
+    "node-fetch": "^2.6.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-relay": "15.0.0",
+    "relay-runtime": "15.0.0"
+  },
+  "peerDependencies": {
+    "@rescript/react": "*",
+    "react-relay": ">=15.0.0",
+    "relay-runtime": "*",
+    "rescript": ">=9.1.2"
+  },
+  "dependencies": {
+    "detect-libc": "^2.0.1"
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
