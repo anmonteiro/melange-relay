@@ -31,15 +31,14 @@ let useQuery
   =
   useLazyLoadQuery
     node
-    (Melange_relay_internal.internal_cleanObjectFromUndefinedRaw
+    (Internal.internal_cleanObjectFromUndefinedRaw
        (variables |. convertVariables))
     (useQueryConfig
        ?fetchKey
        ?fetchPolicy:(fetchPolicy |. FetchPolicy.map)
        ?networkCacheConfig
        ())
-  |. fun __x ->
-  Melange_relay_internal.internal_useConvertedValue convertResponse __x
+  |. fun __x -> Internal.internal_useConvertedValue convertResponse __x
 
 type nonrec useQueryLoaderOptions =
   { fetchPolicy : string option [@mel.optional]
@@ -103,7 +102,7 @@ let usePreloaded
     ~(queryRef : 'queryRef)
   =
   usePreloadedQuery node (queryRef |. mkQueryRef) |. fun __x ->
-  Melange_relay_internal.internal_useConvertedValue convertResponse __x
+  Internal.internal_useConvertedValue convertResponse __x
 
 external fetchQuery :
    Environment.t

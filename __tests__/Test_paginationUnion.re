@@ -80,7 +80,7 @@ module Test = {
     let groupId = "123";
     let query = Query.use(~variables={groupId: groupId}, ());
 
-    let (_, startTransition) = ReactExperimental.useTransition();
+    let (_, startTransition) = TestsUtils.useTransition();
 
     // Fragment.get;
     switch (Fragment.usePagination(query.fragmentRefs)) {

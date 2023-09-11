@@ -66,7 +66,7 @@ module UserDisplayer = {
 module UserNodeDisplayer = {
   [@react.component]
   let make = (~queryRef) => {
-    let (_, startTransition) = ReactExperimental.useTransition();
+    let (_, startTransition) = TestsUtils.useTransition();
     switch (Fragment.usePagination(queryRef)) {
     | {data, hasNext, loadNext, isLoadingNext, refetch, _} =>
       <div>

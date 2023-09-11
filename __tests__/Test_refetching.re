@@ -45,7 +45,7 @@ module Test = {
     let (data, refetch) =
       Fragment.useRefetchable(query.loggedInUser.fragmentRefs);
 
-    let (_, startTransition) = ReactExperimental.useTransition();
+    let (_, startTransition) = TestsUtils.useTransition();
 
     <div>
       {React.string(

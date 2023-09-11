@@ -19,7 +19,7 @@ external useFragment_ :
    outside of React's render.*)
 let useFragment ~node ~(convertFragment : 'fragment -> 'fragment) ~fRef =
   useFragment_ node fRef |. fun __x ->
-  Melange_relay_internal.internal_useConvertedValue convertFragment __x
+  Internal.internal_useConvertedValue convertFragment __x
 
 external useFragmentOpt_ :
    'node fragmentNode
@@ -57,9 +57,7 @@ type refetchableFnOpts =
 let internal_makeRefetchableFnOpts ?fetchPolicy ?onComplete () =
   refetchableFnOpts
     ?fetchPolicy:(fetchPolicy |. FetchPolicy.map)
-    ?onComplete:
-      (onComplete
-      |. Melange_relay_internal.internal_nullableToOptionalExnHandler)
+    ?onComplete:(onComplete |. Internal.internal_nullableToOptionalExnHandler)
     ()
 
 type nonrec paginationLoadMoreOptions =
@@ -127,9 +125,7 @@ let usePaginationFragment
     ~(convertRefetchVariables : 'refetchVariables -> 'refetchVariables)
   =
   let p = usePaginationFragment_ node fRef in
-  let data =
-    Melange_relay_internal.internal_useConvertedValue convertFragment p.data
-  in
+  let data = Internal.internal_useConvertedValue convertFragment p.data in
   { data
   ; loadNext =
       React.useMemo1
@@ -138,9 +134,7 @@ let usePaginationFragment
             count
             (paginationLoadMoreOptions
                ?onComplete:
-                 (onComplete
-                 |. Melange_relay_internal.internal_nullableToOptionalExnHandler
-                 )
+                 (onComplete |. Internal.internal_nullableToOptionalExnHandler)
                ()))
         [| p.loadNext |]
   ; loadPrevious =
@@ -150,9 +144,7 @@ let usePaginationFragment
             count
             (paginationLoadMoreOptions
                ?onComplete:
-                 (onComplete
-                 |. Melange_relay_internal.internal_nullableToOptionalExnHandler
-                 )
+                 (onComplete |. Internal.internal_nullableToOptionalExnHandler)
                ()))
         [| p.loadPrevious |]
   ; hasNext = p.hasNext
@@ -163,7 +155,7 @@ let usePaginationFragment
       React.useMemo1
         (fun () ~variables ?fetchPolicy ?onComplete () ->
           p.refetch
-            (Melange_relay_internal.internal_cleanObjectFromUndefinedRaw
+            (Internal.internal_cleanObjectFromUndefinedRaw
                (variables |. convertRefetchVariables))
             (internal_makeRefetchableFnOpts ?onComplete ?fetchPolicy ()))
         [| p.refetch |]
@@ -185,9 +177,7 @@ let useBlockingPaginationFragment
     ~(convertRefetchVariables : 'refetchVariables -> 'refetchVariables)
   =
   let p = useBlockingPaginationFragment_ node fRef in
-  let data =
-    Melange_relay_internal.internal_useConvertedValue convertFragment p.data
-  in
+  let data = Internal.internal_useConvertedValue convertFragment p.data in
   { data
   ; loadNext =
       React.useMemo1
@@ -196,9 +186,7 @@ let useBlockingPaginationFragment
             count
             (paginationLoadMoreOptions
                ?onComplete:
-                 (onComplete
-                 |. Melange_relay_internal.internal_nullableToOptionalExnHandler
-                 )
+                 (onComplete |. Internal.internal_nullableToOptionalExnHandler)
                ()))
         [| p.loadNext |]
   ; loadPrevious =
@@ -208,9 +196,7 @@ let useBlockingPaginationFragment
             count
             (paginationLoadMoreOptions
                ?onComplete:
-                 (onComplete
-                 |. Melange_relay_internal.internal_nullableToOptionalExnHandler
-                 )
+                 (onComplete |. Internal.internal_nullableToOptionalExnHandler)
                ()))
         [| p.loadPrevious |]
   ; hasNext = p.hasNext
@@ -219,7 +205,7 @@ let useBlockingPaginationFragment
       React.useMemo1
         (fun () ~variables ?fetchPolicy ?onComplete () ->
           p.refetch
-            (Melange_relay_internal.internal_cleanObjectFromUndefinedRaw
+            (Internal.internal_cleanObjectFromUndefinedRaw
                (variables |. convertRefetchVariables))
             (internal_makeRefetchableFnOpts ?onComplete ?fetchPolicy ()))
         [| p.refetch |]
@@ -247,16 +233,12 @@ let useRefetchableFragment
     ~fRef
   =
   let fragmentData, refetchFn = useRefetchableFragment_ node fRef in
-  let data =
-    Melange_relay_internal.internal_useConvertedValue
-      convertFragment
-      fragmentData
-  in
+  let data = Internal.internal_useConvertedValue convertFragment fragmentData in
   ( data
   , React.useMemo1
       (fun () ~(variables : 'refetchVariables) ?fetchPolicy ?onComplete () ->
         refetchFn
-          (Melange_relay_internal.internal_removeUndefinedAndConvertNullsRaw
+          (Internal.internal_removeUndefinedAndConvertNullsRaw
              (variables |. convertRefetchVariables))
           (internal_makeRefetchableFnOpts ?fetchPolicy ?onComplete ()))
       [| refetchFn |] )
