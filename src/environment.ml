@@ -16,13 +16,13 @@ type nonrec 'a environmentConfig =
 let nodeInterfaceMissingFieldHandler =
   MissingFieldHandler.makeLinkedMissingFieldHandler
     (fun field record args _store ->
-      match
-        Js.Nullable.toOption record, field##name, Js.Nullable.toOption args##id
-      with
-      | Some record, "node", argsId
-        when record |. RecordProxy.getType = Store.storeRootType ->
-        argsId
-      | _ -> None)
+       match
+         Js.Nullable.toOption record, field##name, Js.Nullable.toOption args##id
+       with
+       | Some record, "node", argsId
+         when record |. RecordProxy.getType = Store.storeRootType ->
+         argsId
+       | _ -> None)
 
 external make : 'a environmentConfig -> t = "Environment"
 [@@module "relay-runtime"] [@@new]
@@ -46,10 +46,10 @@ let make
        ~missingFieldHandlers:
          (match missingFieldHandlers with
          | Some handlers ->
-           handlers |. Belt.Array.concat [| nodeInterfaceMissingFieldHandler |]
+           Array.append handlers [| nodeInterfaceMissingFieldHandler |]
          | None -> [| nodeInterfaceMissingFieldHandler |])
        ?requiredFieldLogger:
-         (requiredFieldLogger |. Belt.Option.map RequiredFieldLogger.toJs)
+         (Option.map RequiredFieldLogger.toJs requiredFieldLogger)
        ?isServer
        ())
 

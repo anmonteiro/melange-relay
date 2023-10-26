@@ -79,7 +79,7 @@ module Utils = struct
     begin match connection.edges with
       | None -> [||]
       | Some edges -> edges
-        |. Belt.Array.keepMap(function 
+        |. Melange_relay.Internal.internal_keepMap ~f:(function 
           | None -> None
           | Some edge -> edge.node
         )
