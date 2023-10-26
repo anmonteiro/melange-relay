@@ -5,19 +5,14 @@ let resolveNestedRecord
     ~(path : string list)
   =
   let currentRecord = ref rootRecord in
-  let pathLength = List.length path in
-  (match pathLength with
-  | 0 -> ()
-  | _ ->
-    for i = 0 to pathLength - 1 do
-      let currentPath = path |. Belt.List.get i in
-      match currentRecord.contents, currentPath with
-      | Some record, Some currentPath ->
-        currentRecord :=
-          record
-          |. RecordProxy.getLinkedRecord ~name:currentPath ()
-      | _ -> currentRecord := None
-    done);
+  List.iter
+    (fun currentPath ->
+       match !currentRecord with
+       | Some record ->
+         currentRecord :=
+           RecordProxy.getLinkedRecord record ~name:currentPath ()
+       | _ -> currentRecord := None)
+    path;
   currentRecord.contents
 
 let resolveNestedRecordFromRoot ~store ~(path : string list) =
@@ -25,9 +20,7 @@ let resolveNestedRecordFromRoot ~store ~(path : string list) =
   | [] -> None
   | rootRecordPath :: [] ->
     (match
-       store
-       |. RecordSourceSelectorProxy.getRootField
-            ~fieldName:rootRecordPath
+       store |. RecordSourceSelectorProxy.getRootField ~fieldName:rootRecordPath
      with
     | Some rootRecord -> Some rootRecord
     | None -> None)
@@ -35,8 +28,7 @@ let resolveNestedRecordFromRoot ~store ~(path : string list) =
     resolveNestedRecord
       ~rootRecord:
         (store
-        |. RecordSourceSelectorProxy.getRootField
-             ~fieldName:rootRecordPath)
+        |. RecordSourceSelectorProxy.getRootField ~fieldName:rootRecordPath)
       ~path:restPath
 
 type nonrec insertAt =
@@ -50,52 +42,56 @@ type nonrec connectionConfig =
   }
 
 let removeNodeFromConnections ~store ~node ~connections =
-  connections
-  |. Belt.List.forEach (fun connectionConfig ->
-      match
-        store |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
-      with
-      | Some owner ->
-        (match
-           ConnectionHandler.getConnection
-             ~record:owner
-             ~key:connectionConfig.key
-             ?filters:connectionConfig.filters
-             ()
-         with
-        | Some connection ->
-          ConnectionHandler.deleteNode
-            ~connection
-            ~nodeId:(node |. RecordProxy.getDataId)
-        | None -> ())
-      | None -> ())
+  List.iter
+    (fun connectionConfig ->
+       match
+         store
+         |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
+       with
+       | Some owner ->
+         (match
+            ConnectionHandler.getConnection
+              ~record:owner
+              ~key:connectionConfig.key
+              ?filters:connectionConfig.filters
+              ()
+          with
+         | Some connection ->
+           ConnectionHandler.deleteNode
+             ~connection
+             ~nodeId:(node |. RecordProxy.getDataId)
+         | None -> ())
+       | None -> ())
+    connections
 
 let createAndAddEdgeToConnections ~store ~node ~connections ~edgeName ~insertAt =
-  connections
-  |. Belt.List.forEach (fun connectionConfig ->
-      match
-        store |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
-      with
-      | Some connectionOwner ->
-        (match
-           ConnectionHandler.getConnection
-             ~record:connectionOwner
-             ~key:connectionConfig.key
-             ?filters:connectionConfig.filters
-             ()
-         with
-        | Some connection ->
-          let edge =
-            ConnectionHandler.createEdge
-              ~store
-              ~connection
-              ~node
-              ~edgeType:edgeName
-          in
-          (match insertAt with
-          | Start ->
-            ConnectionHandler.insertEdgeAfter ~connection ~newEdge:edge ()
-          | End ->
-            ConnectionHandler.insertEdgeBefore ~connection ~newEdge:edge ())
-        | None -> ())
-      | None -> ())
+  List.iter
+    (fun connectionConfig ->
+       match
+         store
+         |. RecordSourceSelectorProxy.get ~dataId:connectionConfig.parentID
+       with
+       | Some connectionOwner ->
+         (match
+            ConnectionHandler.getConnection
+              ~record:connectionOwner
+              ~key:connectionConfig.key
+              ?filters:connectionConfig.filters
+              ()
+          with
+         | Some connection ->
+           let edge =
+             ConnectionHandler.createEdge
+               ~store
+               ~connection
+               ~node
+               ~edgeType:edgeName
+           in
+           (match insertAt with
+           | Start ->
+             ConnectionHandler.insertEdgeAfter ~connection ~newEdge:edge ()
+           | End ->
+             ConnectionHandler.insertEdgeBefore ~connection ~newEdge:edge ())
+         | None -> ())
+       | None -> ())
+    connections

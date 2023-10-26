@@ -6,7 +6,7 @@ let (optArrayOfNullableToOptArrayOfOpt :
  fun x ->
   match x with
   | None -> None
-  | Some arr -> Some (arr |. Belt.Array.map Js.Nullable.toOption)
+  | Some arr -> Some (Array.map Js.Nullable.toOption arr)
 
 type nonrec t
 

@@ -1087,10 +1087,7 @@ module MakeLoadQuery : functor (C : MakeLoadQueryConfig) -> sig
     -> C.loadedQueryRef
 
   val queryRefToObservable : C.loadedQueryRef -> C.response Observable.t option
-
-  val queryRefToPromise :
-     C.loadedQueryRef
-    -> (unit, unit) Belt.Result.t Js.Promise.t
+  val queryRefToPromise : C.loadedQueryRef -> (unit, unit) result Js.Promise.t
 end
 
 module Mutation : sig
@@ -1320,4 +1317,6 @@ module Internal : sig
     -> ('b Js.Nullable.t -> 'a) option
 
   type arg = Arg : _ -> arg [@@live] [@@unboxed]
+
+  val internal_keepMap : 'a array -> f:('a -> 'b option) -> 'b array
 end
