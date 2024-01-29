@@ -32,7 +32,7 @@ external makePromiseBased :
   -> unit
   -> t
   = "create"
-[@@module "relay-runtime"] [@@scope "Network"]
+[@@mel.module "relay-runtime"] [@@mel.scope "Network"]
 
 external makeObservableBased :
    observableFunction:fetchFunctionObservable
@@ -40,4 +40,4 @@ external makeObservableBased :
   -> unit
   -> t
   = "create"
-[@@module "relay-runtime"] [@@scope "Network"]
+[@@mel.module "relay-runtime"] [@@mel.scope "Network"]

@@ -130,7 +130,6 @@ module Test = {
         ~month=0.,
         ~seconds=0.,
         ~year=2022.,
-        (),
       );
 
     let query = Query.use(~variables={beforeDate: makeDate()}, ());

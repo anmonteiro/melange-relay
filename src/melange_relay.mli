@@ -78,7 +78,7 @@ external generateClientID :
   -> unit
   -> dataId
   = "generateClientID"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 (** This generates a `dataId` for use on the _client_ side. However, this is
     farily low level, and what you're probably really looking for is
     `generateUniqueClientID` that'll let you generate a new, unique `dataId`
@@ -86,27 +86,27 @@ external generateClientID :
     updates).*)
 
 external generateUniqueClientID : unit -> dataId = "generateUniqueClientID"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 (** This generates a unique `dataId` that's safe to use on the _client_ side.
     Useful when doing optimistic updates and you need to create IDs that the
     optimistic update can use.*)
 
 external isClientID : dataId -> bool = "isClientID"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 (** Checks whether the provided `dataId` is guaranteed to be a client side only
     id.*)
 
 type nonrec featureFlags =
   { mutable delayCleanupOfPendingPreloadQueries : bool
         [@mel.as "DELAY_CLEANUP_OF_PENDING_PRELOAD_QUERIES"]
-  ; mutable enableClientEdges : bool [@as "ENABLE_CLIENT_EDGES"]
+  ; mutable enableClientEdges : bool [@mel.as "ENABLE_CLIENT_EDGES"]
   ; mutable enableVariableConnectionKey : bool
         [@mel.as "ENABLE_VARIABLE_CONNECTION_KEY"]
   ; mutable enablePartialRenderingDefault : bool
         [@mel.as "ENABLE_PARTIAL_RENDERING_DEFAULT"]
   ; mutable enableReactFlightComponentField : bool
         [@mel.as "ENABLE_REACT_FLIGHT_COMPONENT_FIELD"]
-  ; mutable enableRelayResolvers : bool [@as "ENABLE_RELAY_RESOLVERS"]
+  ; mutable enableRelayResolvers : bool [@mel.as "ENABLE_RELAY_RESOLVERS"]
   ; mutable enableGetFragmentIdentifierOptimization : bool
         [@mel.as "ENABLE_GETFRAGMENTIDENTIFIER_OPTIMIZATION"]
   ; mutable enableFriendlyQueryNameGqlUrl : bool
@@ -115,7 +115,7 @@ type nonrec featureFlags =
         [@mel.as "ENABLE_LOAD_QUERY_REQUEST_DEDUPING"]
   ; mutable enableDoNotWrapLiveQuery : bool
         [@mel.as "ENABLE_DO_NOT_WRAP_LIVE_QUERY"]
-  ; mutable enableNotifySubscription : bool [@as "ENABLE_NOTIFY_SUBSCRIPTION"]
+  ; mutable enableNotifySubscription : bool [@mel.as "ENABLE_NOTIFY_SUBSCRIPTION"]
   ; mutable enableContainersSubscribeOnCommit : bool
         [@mel.as "ENABLE_CONTAINERS_SUBSCRIBE_ON_COMMIT"]
   ; mutable enableQueryRendererOffscreenSupport : bool
@@ -130,7 +130,7 @@ type nonrec featureFlags =
     enable/disable features.*)
 
 external relayFeatureFlags : featureFlags = "RelayFeatureFlags"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 (** Relay feature flags. Mutate this record as soon as your application boots to
     enable/disable features.*)
 
@@ -147,7 +147,7 @@ external convertObj :
   -> 'c
   -> 'd
   = "traverser"
-[@@module "./utils"]
+[@@mel.module "./utils"]
 (** Internal, do not use.*)
 
 (** Read the following section on working with the Relay store:
@@ -158,11 +158,11 @@ module RecordProxy : sig
       https://relay.dev/docs/en/relay-store*)
 
   external copyFieldsFrom : t -> sourceRecord:t -> unit = "copyFieldsFrom"
-  [@@send]
+  [@@mel.send]
   (** Copies all fields from one `RecordProxy` to another.*)
 
   external getDataId : t -> dataId = "getDataID"
-  [@@send]
+  [@@mel.send]
   (** Gets the \`dataId\` for a particular record.*)
 
   external getLinkedRecord :
@@ -172,7 +172,7 @@ module RecordProxy : sig
     -> unit
     -> t option
     = "getLinkedRecord"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Gets a single linked record. A linked record is another object in the
       store, and not a scalar field like an int or float.*)
 
@@ -193,12 +193,12 @@ module RecordProxy : sig
     -> unit
     -> t
     = "getOrCreateLinkedRecord"
-  [@@send]
+  [@@mel.send]
   (** This returns an existing linked record, or creates one at the configured
       place if one does not already exist.*)
 
   external getType : t -> string = "getType"
-  [@@send]
+  [@@mel.send]
   (** Returns the `__typename` of this particular record.*)
 
   external getValueString :
@@ -208,7 +208,7 @@ module RecordProxy : sig
     -> unit
     -> string option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be a string.*)
 
   external getValueStringArray :
@@ -218,7 +218,7 @@ module RecordProxy : sig
     -> unit
     -> string option array option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be an array of strings.*)
 
   external getValueInt :
@@ -228,7 +228,7 @@ module RecordProxy : sig
     -> unit
     -> int option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be an int.*)
 
   external getValueIntArray :
@@ -238,7 +238,7 @@ module RecordProxy : sig
     -> unit
     -> int option array option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be an array of ints.*)
 
   external getValueFloat :
@@ -248,7 +248,7 @@ module RecordProxy : sig
     -> unit
     -> float option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be a float.*)
 
   external getValueFloatArray :
@@ -258,7 +258,7 @@ module RecordProxy : sig
     -> unit
     -> float option array option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be an array of floats.*)
 
   external getValueBool :
@@ -268,7 +268,7 @@ module RecordProxy : sig
     -> unit
     -> bool option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be a boolean.*)
 
   external getValueBoolArray :
@@ -278,7 +278,7 @@ module RecordProxy : sig
     -> unit
     -> bool option array option
     = "getValue"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns a field value, expecting it to be an array of booleans.*)
 
   external setLinkedRecord :
@@ -289,7 +289,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setLinkedRecord"
-  [@@send]
+  [@@mel.send]
   (** Sets a `RecordProxy.t` as the linked record for a particular field.*)
 
   external setLinkedRecords :
@@ -300,7 +300,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setLinkedRecords"
-  [@@send]
+  [@@mel.send]
   (** Sets an array of `RecordProxy.t` as the linked records for a particular
       field.*)
 
@@ -312,7 +312,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets a string as field value.*)
 
   external setValueStringArray :
@@ -323,7 +323,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets an array of strings as field value.*)
 
   external setValueInt :
@@ -334,7 +334,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets an int as field value.*)
 
   external setValueIntArray :
@@ -345,7 +345,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets an array of ints as field value.*)
 
   external setValueFloat :
@@ -356,7 +356,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets a float as field value.*)
 
   external setValueFloatArray :
@@ -367,7 +367,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets an array of floats as field value.*)
 
   external setValueBool :
@@ -378,7 +378,7 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets a boolean as field value.*)
 
   external setValueBoolArray :
@@ -389,80 +389,80 @@ module RecordProxy : sig
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets an array of booleans as field value.*)
 
   external setValueToUndefined :
      t
-    -> (_[@as {json|undefined|json}])
+    -> (_[@mel.as {json|undefined|json}])
     -> name:string
     -> ?arguments:arguments
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets the field value to `undefined` (meaning Relay will treat it as
       missing data).*)
 
   external setValueToNull :
      t
-    -> (_[@as {json|null|json}])
+    -> (_[@mel.as {json|null|json}])
     -> name:string
     -> ?arguments:arguments
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets the field value to `null`.*)
 
   external setLinkedRecordToUndefined :
      t
-    -> (_[@as {json|undefined|json}])
+    -> (_[@mel.as {json|undefined|json}])
     -> name:string
     -> ?arguments:arguments
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets this linked record to `undefined` (meaning Relay will treat it as
       missing data).*)
 
   external setLinkedRecordToNull :
      t
-    -> (_[@as {json|null|json}])
+    -> (_[@mel.as {json|null|json}])
     -> name:string
     -> ?arguments:arguments
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets this linked record to `null`.*)
 
   external setLinkedRecordsToUndefined :
      t
-    -> (_[@as {json|undefined|json}])
+    -> (_[@mel.as {json|undefined|json}])
     -> name:string
     -> ?arguments:arguments
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets the field holding these linked records to `undefined` (meaning Relay
       will treat it as missing data).*)
 
   external setLinkedRecordsToNull :
      t
-    -> (_[@as {json|null|json}])
+    -> (_[@mel.as {json|null|json}])
     -> name:string
     -> ?arguments:arguments
     -> unit
     -> t
     = "setValue"
-  [@@send]
+  [@@mel.send]
   (** Sets the field holding these linked records to `null`.*)
 
   external invalidateRecord : t -> unit = "invalidateRecord"
-  [@@send]
+  [@@mel.send]
   (** Invalidates this record.
 
       Invalidating a record means that the _next_ time Relay evaluates this
@@ -487,19 +487,19 @@ module RecordSourceSelectorProxy : sig
     -> typeName:string
     -> RecordProxy.t
     = "create"
-  [@@send]
+  [@@mel.send]
   (** Creates a new `RecordProxy`.*)
 
   external delete : t -> dataId:dataId -> unit = "delete"
-  [@@send]
+  [@@mel.send]
   (** Deletes the `RecordProxy` with the provided `dataId`.*)
 
   external get : t -> dataId:dataId -> RecordProxy.t option = "get"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns the `RecordProxy` with the provided `dataId`, if it exists.*)
 
   external getRoot : t -> RecordProxy.t = "getRoot"
-  [@@send]
+  [@@mel.send]
   (** Returns the _root_ `RecordProxy`, meaning the `RecordProxy` holding your
       top level fields.*)
 
@@ -508,7 +508,7 @@ module RecordSourceSelectorProxy : sig
     -> fieldName:string
     -> RecordProxy.t option
     = "getRootField"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns the `RecordProxy` for the `fieldName` at root. You should prefer
       using `RecordSourceSelectorProxy.getRoot()` and traverse from there if you
       need access to root fields rather than use this.*)
@@ -520,7 +520,7 @@ module RecordSourceSelectorProxy : sig
   (** Plural version of `RecordSourceSelectorProxy.getRootField`.*)
 
   external invalidateStore : t -> unit = "invalidateStore"
-  [@@send]
+  [@@mel.send]
   (** Invalidates the entire store. This means that _at the next render_, the
       entire store will be treated as empty, meaning Relay will refetch
       everything it needs to show the view it's to show.*)
@@ -532,11 +532,11 @@ module ReadOnlyRecordSourceProxy : sig
   (** Type type representing a `ReadOnlyRecordSourceProxy`.*)
 
   external get : t -> dataId:dataId -> RecordProxy.t option = "get"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
   (** Returns the `RecordProxy` with the provided `dataId`, if it exists.*)
 
   external getRoot : t -> RecordProxy.t = "getRoot"
-  [@@send]
+  [@@mel.send]
   (** Returns the _root_ `RecordProxy`, meaning the `RecordProxy` holding your
       top level fields.*)
 end
@@ -569,7 +569,7 @@ module MissingFieldHandler : sig
 
   and normalizationLiteralArgument =
     { name : string
-    ; type_ : string Js.Nullable.t [@as "type"]
+    ; type_ : string Js.Nullable.t [@mel.as "type"]
     ; value : Js.Json.t
     }
 
@@ -580,7 +580,7 @@ module MissingFieldHandler : sig
 
   and normalizationVariableArgument =
     { name : string
-    ; type_ : string Js.Nullable.t [@as "type"]
+    ; type_ : string Js.Nullable.t [@mel.as "type"]
     ; variableName : string
     }
 
@@ -662,7 +662,7 @@ module ConnectionHandler : sig
     -> unit
     -> RecordProxy.t option
     = "getConnection"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"] [@@return nullable]
+  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"] [@@mel.return nullable]
   (** For a `RecordProxy`, returns the `RecordProxy` that is at the connection
       config provided.*)
 
@@ -673,7 +673,7 @@ module ConnectionHandler : sig
     -> edgeType:string
     -> RecordProxy.t
     = "createEdge"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
   (** Creates an edge for a particular connection.*)
 
   external insertEdgeBefore :
@@ -683,7 +683,7 @@ module ConnectionHandler : sig
     -> unit
     -> unit
     = "insertEdgeBefore"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
   (** Inserts an edge into a connection _before_ the provided cursor. If no
       cursor is provided, it inserts the edge at the start of the connection
       list.*)
@@ -695,7 +695,7 @@ module ConnectionHandler : sig
     -> unit
     -> unit
     = "insertEdgeAfter"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
   (** Inserts an edge into a connection _after_ the provided cursor. If no
       cursor is provided, it inserts the edge at the end of the connection list.*)
 
@@ -704,7 +704,7 @@ module ConnectionHandler : sig
     -> nodeId:dataId
     -> unit
     = "deleteNode"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
   (** Deletes any edge from the connection where the node of the edge has the
       provided `dataId`. Please not that this _will not_ remove the actual node
       from the store. Use `RecordSourceSelectorProxy.delete` for that.*)
@@ -715,7 +715,7 @@ module ConnectionHandler : sig
     -> 'filters
     -> dataId
     = "getConnectionID"
-  [@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
   (** Constructs a `dataId` targeting a specific connection at a specific
       parent. Note that the generated module for every fragment with a
       `@connection` will have a `<moduleName>.Utils.connectionKey` representing
@@ -758,29 +758,29 @@ module Observable : sig
   (** An observer of the observable.*)
 
   external makeObserver :
-     ?start:((subscription[@uncurry]) -> unit)
-    -> ?next:(('response[@uncurry]) -> unit)
-    -> ?error:((Js.Exn.t[@uncurry]) -> unit)
-    -> ?complete:((unit[@uncurry]) -> unit)
+     ?start:((subscription[@mel.uncurry]) -> unit)
+    -> ?next:(('response[@mel.uncurry]) -> unit)
+    -> ?error:((Js.Exn.t[@mel.uncurry]) -> unit)
+    -> ?complete:((unit[@mel.uncurry]) -> unit)
     -> ?unsubscribe:(subscription -> unit)
     -> unit
     -> 'response observer
     = ""
-  [@@obj]
+  [@@mel.obj]
   (** Create an observer.*)
 
   external make : ('t sink -> subscription option) -> 't t = "create"
-  [@@module "relay-runtime"] [@@scope "Observable"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "Observable"]
   (** Create a new observable, getting fed an `Observable.sink` for interacting
       with the observable, and optionally returning a `Observable.subscription`
       if you have things you want to unsubscribe from as the observable closes.*)
 
   external subscribe : 't t -> 't observer -> subscription = "subscribe"
-  [@@send]
+  [@@mel.send]
   (** Subscribe to the `Observable.t` using an observer.*)
 
   external toPromise : 't t -> 't Js.Promise.t = "toPromise"
-  [@@send]
+  [@@mel.send]
   (** Turns an `Observable` into a promise. _Beware_ that reading the response
       in the resulting promise is currently _not safe_ due to some internals of
       how ReScript Relay works. This will be resolved in the future.*)
@@ -832,7 +832,7 @@ module Network : sig
     -> unit
     -> t
     = "create"
-  [@@module "relay-runtime"] [@@scope "Network"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "Network"]
   (** Create a new `NetworkLayer` using a fetch function that returns a promise.*)
 
   external makeObservableBased :
@@ -841,7 +841,7 @@ module Network : sig
     -> unit
     -> t
     = "create"
-  [@@module "relay-runtime"] [@@scope "Network"]
+  [@@mel.module "relay-runtime"] [@@mel.scope "Network"]
   (** Create a new `NetworkLayer` using a fetch function that returns an
       `Observable`.*)
 end
@@ -853,13 +853,13 @@ module RecordSource : sig
   (** The type representing an instantiated `RecordSource`.*)
 
   external make : ?records:recordSourceRecords -> unit -> t = "RecordSource"
-  [@@module "relay-runtime"] [@@new]
+  [@@mel.module "relay-runtime"] [@@mel.new]
   (** Create a new `RecordSource`. Here's where you pass an existing
       `recordSourceRecords` if you have existing records you want to hydrate the
       store with, when doing SSR or similar.*)
 
   external toJSON : t -> recordSourceRecords = "toJSON"
-  [@@send]
+  [@@mel.send]
   (** Serializes the `RecordSource` into `recordSourceRecords` that you can use
       to rehydrate another store. Typically used for SSR.*)
 end
@@ -878,11 +878,11 @@ module Store : sig
   (** Creates a new `Store`.*)
 
   external getSource : t -> RecordSource.t = "getSource"
-  [@@send]
+  [@@mel.send]
   (** Gets the `RecordSource` for this `Store`.*)
 
   external publish : t -> RecordSource.t -> unit = "publish"
-  [@@send]
+  [@@mel.send]
   (** Publishes _new_ records to this store. This is useful in particular with
       frameworks like Next.js where routes could preload data needed and then
       serialize that (using `RecordSource.toJSON`) and send it over the wire,
@@ -890,18 +890,18 @@ module Store : sig
       allow you to publish those records into your existing store.*)
 
   external holdGC : t -> unit = "holdGC"
-  [@@send]
+  [@@mel.send]
   (** Informes the store to stop its normal garbage collection processes. This
       prevents data being lost between calling relay's `fetchQuery` any
       serialization process (eg: toJSON)*)
 
   external storeRootId : dataId = "ROOT_ID"
-  [@@module "relay-runtime"]
+  [@@mel.module "relay-runtime"]
   (** The `dataId` for the Relay store's root. Useful when for example
       referencing the `parentID` of a connection that's on the store root.*)
 
   external storeRootType : string = "ROOT_TYPE"
-  [@@module "relay-runtime"]
+  [@@mel.module "relay-runtime"]
   (** The `type` for the Relay store's root `RecordProxy`.*)
 end
 
@@ -915,7 +915,7 @@ module Disposable : sig
   (** The type representing a `Disposable`.*)
 
   external dispose : t -> unit = "dispose"
-  [@@send]
+  [@@mel.send]
   (** Dispose the `Disposable`.*)
 
   external ignore : t -> unit = "%ignore"
@@ -958,7 +958,7 @@ module Environment : sig
   (** Create a new `Environment`.*)
 
   external getStore : t -> Store.t = "getStore"
-  [@@send]
+  [@@mel.send]
   (** Get the `Store` for this `Environment`.*)
 
   external commitPayload :
@@ -967,11 +967,11 @@ module Environment : sig
     -> 'payload
     -> unit
     = "commitPayload"
-  [@@send]
+  [@@mel.send]
   (** Given an `operationDescriptor`, commits the corresponding payload.*)
 
   external retain : t -> operationDescriptor -> Disposable.t = "retain"
-  [@@send]
+  [@@mel.send]
   (** Given an `operationDescriptor`, retains the corresponding operation so any
       data referenced by it isn't garbage collected. You should use the
       generated `Query.retain` function on your queries instead of using this
@@ -1015,7 +1015,7 @@ module Context : sig
   (** The expected shape of the context.*)
 
   external context : contextShape option React.Context.t = "ReactRelayContext"
-  [@@module "react-relay"]
+  [@@mel.module "react-relay"]
   (** The actual React context coming from Relay.*)
 
   (** The context provider you wrap your app in and pass your `Environment` for
@@ -1047,7 +1047,7 @@ external commitLocalUpdate :
   -> updater:(RecordSourceSelectorProxy.t -> unit)
   -> unit
   = "commitLocalUpdate"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 (** A way of committing a local update to the store.*)
 
 external useSubscribeToInvalidationState :
@@ -1055,7 +1055,7 @@ external useSubscribeToInvalidationState :
   -> (unit -> unit)
   -> Disposable.t
   = "useSubscribeToInvalidationState"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 (** Allows you to subscribe to when a record, connection, or even the store
     itself is invalidated, and then react to that.*)
 

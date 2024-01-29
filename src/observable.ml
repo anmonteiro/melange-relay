@@ -15,28 +15,28 @@ type nonrec 'response sink =
 type nonrec 'response observer
 
 external makeObserver :
-   ?start:((subscription[@uncurry]) -> unit)
-  -> ?next:(('response[@uncurry]) -> unit)
-  -> ?error:((Js.Exn.t[@uncurry]) -> unit)
-  -> ?complete:((unit[@uncurry]) -> unit)
-  -> ?unsubscribe:((subscription[@uncurry]) -> unit)
+   ?start:((subscription[@mel.uncurry]) -> unit)
+  -> ?next:(('response[@mel.uncurry]) -> unit)
+  -> ?error:((Js.Exn.t[@mel.uncurry]) -> unit)
+  -> ?complete:((unit[@mel.uncurry]) -> unit)
+  -> ?unsubscribe:((subscription[@mel.uncurry]) -> unit)
   -> unit
   -> 'response observer
   = ""
-[@@obj]
+[@@mel.obj]
 
 external make :
    ('response sink -> subscription option)
   -> 'response t
   = "create"
-[@@module "relay-runtime"] [@@scope "Observable"]
+[@@mel.module "relay-runtime"] [@@mel.scope "Observable"]
 
 external subscribe :
    'response t
   -> 'response observer
   -> subscription
   = "subscribe"
-[@@send]
+[@@mel.send]
 
-external toPromise : 't t -> 't Js.Promise.t = "toPromise" [@@send]
+external toPromise : 't t -> 't Js.Promise.t = "toPromise" [@@mel.send]
 external ignoreSubscription : subscription -> unit = "%ignore"

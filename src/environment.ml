@@ -5,13 +5,13 @@ type nonrec t
 type nonrec 'a environmentConfig =
   { network : Network.t
   ; store : Store.t
-  ; getDataID : (nodeObj:'a -> typeName:string -> string) option [@optional]
-  ; treatMissingFieldsAsNull : bool option [@optional]
+  ; getDataID : (nodeObj:'a -> typeName:string -> string) option [@mel.optional]
+  ; treatMissingFieldsAsNull : bool option [@mel.optional]
   ; missingFieldHandlers : MissingFieldHandler.t array
-  ; requiredFieldLogger : RequiredFieldLogger.js option [@optional]
-  ; isServer : bool option [@optional]
+  ; requiredFieldLogger : RequiredFieldLogger.js option [@mel.optional]
+  ; isServer : bool option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 let nodeInterfaceMissingFieldHandler =
   MissingFieldHandler.makeLinkedMissingFieldHandler
@@ -25,7 +25,7 @@ let nodeInterfaceMissingFieldHandler =
        | _ -> None)
 
 external make : 'a environmentConfig -> t = "Environment"
-[@@module "relay-runtime"] [@@new]
+[@@mel.module "relay-runtime"] [@@mel.new]
 
 let make
     ~network
@@ -53,7 +53,7 @@ let make
        ?isServer
        ())
 
-external getStore : t -> Store.t = "getStore" [@@send]
+external getStore : t -> Store.t = "getStore" [@@mel.send]
 
 external commitPayload :
    t
@@ -61,6 +61,6 @@ external commitPayload :
   -> 'payload
   -> unit
   = "commitPayload"
-[@@send]
+[@@mel.send]
 
-external retain : t -> operationDescriptor -> Disposable.t = "retain" [@@send]
+external retain : t -> operationDescriptor -> Disposable.t = "retain" [@@mel.send]

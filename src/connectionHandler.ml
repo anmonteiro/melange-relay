@@ -7,7 +7,9 @@ external getConnection :
   -> unit
   -> RecordProxy.t option
   = "getConnection"
-[@@module "relay-runtime"] [@@scope "ConnectionHandler"] [@@return nullable]
+[@@mel.module "relay-runtime"]
+[@@mel.scope "ConnectionHandler"]
+[@@mel.return nullable]
 
 external createEdge :
    store:RecordSourceSelectorProxy.t
@@ -16,7 +18,7 @@ external createEdge :
   -> edgeType:string
   -> RecordProxy.t
   = "createEdge"
-[@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+[@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
 
 external insertEdgeBefore :
    connection:RecordProxy.t
@@ -25,7 +27,7 @@ external insertEdgeBefore :
   -> unit
   -> unit
   = "insertEdgeBefore"
-[@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+[@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
 
 external insertEdgeAfter :
    connection:RecordProxy.t
@@ -34,14 +36,14 @@ external insertEdgeAfter :
   -> unit
   -> unit
   = "insertEdgeAfter"
-[@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+[@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
 
 external deleteNode :
    connection:RecordProxy.t
   -> nodeId:dataId
   -> unit
   = "deleteNode"
-[@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+[@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
 
 external getConnectionID :
    dataId
@@ -49,4 +51,4 @@ external getConnectionID :
   -> 'filters
   -> dataId
   = "getConnectionID"
-[@@module "relay-runtime"] [@@scope "ConnectionHandler"]
+[@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]

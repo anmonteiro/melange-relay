@@ -8,31 +8,31 @@ external create :
   -> typeName:string
   -> RecordProxy.t
   = "create"
-[@@send]
+[@@mel.send]
 
-external delete : t -> dataId:dataId -> unit = "delete" [@@send]
+external delete : t -> dataId:dataId -> unit = "delete" [@@mel.send]
 
 external get : t -> dataId:dataId -> RecordProxy.t option = "get"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
-external getRoot : t -> RecordProxy.t = "getRoot" [@@send]
+external getRoot : t -> RecordProxy.t = "getRoot" [@@mel.send]
 
 external getRootField :
    t
   -> fieldName:string
   -> RecordProxy.t option
   = "getRootField"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getPluralRootField :
    t
   -> fieldName:string
   -> RecordProxy.t Js.Nullable.t array option
   = "getPluralRootField"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 let getPluralRootField t ~fieldName : RecordProxy.t option array option =
   getPluralRootField t ~fieldName
   |. RecordProxy.optArrayOfNullableToOptArrayOfOpt
 
-external invalidateStore : t -> unit = "invalidateStore" [@@send]
+external invalidateStore : t -> unit = "invalidateStore" [@@mel.send]

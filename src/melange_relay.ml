@@ -30,45 +30,45 @@ external generateClientID :
   -> unit
   -> dataId
   = "generateClientID"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 
 external generateUniqueClientID : unit -> dataId = "generateUniqueClientID"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 
-external isClientID : dataId -> bool = "isClientID" [@@module "relay-runtime"]
+external isClientID : dataId -> bool = "isClientID" [@@mel.module "relay-runtime"]
 
 type nonrec featureFlags =
   { mutable delayCleanupOfPendingPreloadQueries : bool
-        [@as "DELAY_CLEANUP_OF_PENDING_PRELOAD_QUERIES"]
-  ; mutable enableClientEdges : bool [@as "ENABLE_CLIENT_EDGES"]
+        [@mel.as "DELAY_CLEANUP_OF_PENDING_PRELOAD_QUERIES"]
+  ; mutable enableClientEdges : bool [@mel.as "ENABLE_CLIENT_EDGES"]
   ; mutable enableVariableConnectionKey : bool
-        [@as "ENABLE_VARIABLE_CONNECTION_KEY"]
+        [@mel.as "ENABLE_VARIABLE_CONNECTION_KEY"]
   ; mutable enablePartialRenderingDefault : bool
-        [@as "ENABLE_PARTIAL_RENDERING_DEFAULT"]
+        [@mel.as "ENABLE_PARTIAL_RENDERING_DEFAULT"]
   ; mutable enableReactFlightComponentField : bool
-        [@as "ENABLE_REACT_FLIGHT_COMPONENT_FIELD"]
-  ; mutable enableRelayResolvers : bool [@as "ENABLE_RELAY_RESOLVERS"]
+        [@mel.as "ENABLE_REACT_FLIGHT_COMPONENT_FIELD"]
+  ; mutable enableRelayResolvers : bool [@mel.as "ENABLE_RELAY_RESOLVERS"]
   ; mutable enableGetFragmentIdentifierOptimization : bool
-        [@as "ENABLE_GETFRAGMENTIDENTIFIER_OPTIMIZATION"]
+        [@mel.as "ENABLE_GETFRAGMENTIDENTIFIER_OPTIMIZATION"]
   ; mutable enableFriendlyQueryNameGqlUrl : bool
-        [@as "ENABLE_FRIENDLY_QUERY_NAME_GQL_URL"]
+        [@mel.as "ENABLE_FRIENDLY_QUERY_NAME_GQL_URL"]
   ; mutable enableLoadQueryRequestDeduping : bool
-        [@as "ENABLE_LOAD_QUERY_REQUEST_DEDUPING"]
+        [@mel.as "ENABLE_LOAD_QUERY_REQUEST_DEDUPING"]
   ; mutable enableDoNotWrapLiveQuery : bool
-        [@as "ENABLE_DO_NOT_WRAP_LIVE_QUERY"]
-  ; mutable enableNotifySubscription : bool [@as "ENABLE_NOTIFY_SUBSCRIPTION"]
+        [@mel.as "ENABLE_DO_NOT_WRAP_LIVE_QUERY"]
+  ; mutable enableNotifySubscription : bool [@mel.as "ENABLE_NOTIFY_SUBSCRIPTION"]
   ; mutable enableContainersSubscribeOnCommit : bool
-        [@as "ENABLE_CONTAINERS_SUBSCRIBE_ON_COMMIT"]
+        [@mel.as "ENABLE_CONTAINERS_SUBSCRIBE_ON_COMMIT"]
   ; mutable enableQueryRendererOffscreenSupport : bool
-        [@as "ENABLE_QUERY_RENDERER_OFFSCREEN_SUPPORT"]
-  ; mutable maxDataIdLength : int option [@as "MAX_DATA_ID_LENGTH"]
-  ; mutable refactorSuspenseResource : bool [@as "REFACTOR_SUSPENSE_RESOURCE"]
-  ; mutable stringInternLevel : int [@as "STRING_INTERN_LEVEL"]
-  ; mutable useReactCache : bool [@as "USE_REACT_CACHE"]
+        [@mel.as "ENABLE_QUERY_RENDERER_OFFSCREEN_SUPPORT"]
+  ; mutable maxDataIdLength : int option [@mel.as "MAX_DATA_ID_LENGTH"]
+  ; mutable refactorSuspenseResource : bool [@mel.as "REFACTOR_SUSPENSE_RESOURCE"]
+  ; mutable stringInternLevel : int [@mel.as "STRING_INTERN_LEVEL"]
+  ; mutable useReactCache : bool [@mel.as "USE_REACT_CACHE"]
   }
 
 external relayFeatureFlags : featureFlags = "RelayFeatureFlags"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 
 external convertObj :
    'a
@@ -77,15 +77,15 @@ external convertObj :
   -> 'c
   -> 'd
   = "traverser"
-[@@module "./utils"]
+[@@mel.module "./utils"]
 
 module ReadOnlyRecordSourceProxy = struct
   type nonrec t
 
   external get : t -> dataId:dataId -> RecordProxy.t option = "get"
-  [@@send] [@@return nullable]
+  [@@mel.send] [@@mel.return nullable]
 
-  external getRoot : t -> RecordProxy.t = "getRoot" [@@send]
+  external getRoot : t -> RecordProxy.t = "getRoot" [@@mel.send]
 end
 
 module Context = struct
@@ -93,7 +93,7 @@ module Context = struct
   type nonrec contextShape = < environment : Environment.t > Js.t
 
   external context : contextShape option React.Context.t = "ReactRelayContext"
-  [@@module "react-relay"]
+  [@@mel.module "react-relay"]
 
   module Provider = struct
     let make ~(environment : Environment.t) ~children =
@@ -126,7 +126,7 @@ external loadQuery :
   -> loadQueryConfig
   -> 'queryResponse
   = "loadQuery"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 module type MakeLoadQueryConfig = sig
   type nonrec variables
@@ -189,13 +189,13 @@ external commitLocalUpdate :
   -> updater:(RecordSourceSelectorProxy.t -> unit)
   -> unit
   = "commitLocalUpdate"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 
 external useSubscribeToInvalidationState :
    dataId array
   -> (unit -> unit)
   -> Disposable.t
   = "useSubscribeToInvalidationState"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 module Internal = Internal

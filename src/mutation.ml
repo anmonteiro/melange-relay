@@ -16,7 +16,7 @@ type nonrec ('response, 'rawResponse, 'variables) useMutationConfig =
   ; variables : 'variables
   ; uploadables : uploadables option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 type nonrec ('m, 'variables, 'response, 'rawResponse) commitMutationConfigRaw =
   { mutation : 'm mutationNode
@@ -30,7 +30,7 @@ type nonrec ('m, 'variables, 'response, 'rawResponse) commitMutationConfigRaw =
   ; updater : 'response updaterFn option [@mel.optional]
   ; uploadables : uploadables option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 external commitMutation_ :
    Environment.t
@@ -100,7 +100,7 @@ type nonrec ('m, 'variables, 'response, 'rawResponse) useMutationConfigRaw =
   ; variables : 'variables
   ; uploadables : uploadables option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 external useMutation_ :
    'm
@@ -108,7 +108,7 @@ external useMutation_ :
       -> Disposable.t)
      * bool
   = "useMutation"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (* React hook for commiting this mutation.
 

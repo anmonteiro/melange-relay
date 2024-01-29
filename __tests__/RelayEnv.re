@@ -2,7 +2,7 @@ exception Graphql_error(string);
 
 [@deriving jsConverter]
 type t = {
-  [@bs.as "content-type"]
+  [@mel.as "content-type"]
   contentType: string,
   accept: string,
 };

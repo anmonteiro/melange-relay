@@ -12,7 +12,7 @@ type normalizationListValueArgument =
 
 and normalizationLiteralArgument =
   { name : string
-  ; type_ : string Js.Nullable.t [@as "type"]
+  ; type_ : string Js.Nullable.t [@mel.as "type"]
   ; value : Js.Json.t
   }
 
@@ -23,7 +23,7 @@ and normalizationObjectValueArgument =
 
 and normalizationVariableArgument =
   { name : string
-  ; type_ : string Js.Nullable.t [@as "type"]
+  ; type_ : string Js.Nullable.t [@mel.as "type"]
   ; variableName : string
   }
 

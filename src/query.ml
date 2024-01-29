@@ -5,7 +5,7 @@ type nonrec useQueryConfig =
   ; fetchPolicy : string option [@mel.optional]
   ; networkCacheConfig : cacheConfig option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 external useLazyLoadQuery :
    'node queryNode
@@ -13,7 +13,7 @@ external useLazyLoadQuery :
   -> useQueryConfig
   -> 'response
   = "useLazyLoadQuery"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (* React hook for using this query. Prefer using `Query.useLoader()` or
    `YourQueryName_graphql.load()` in combination with `Query.usePreloaded()` to
@@ -44,7 +44,7 @@ type nonrec useQueryLoaderOptions =
   { fetchPolicy : string option [@mel.optional]
   ; networkCacheConfig : cacheConfig option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 external useQueryLoader :
    'node queryNode
@@ -52,7 +52,7 @@ external useQueryLoader :
      * ('variables -> useQueryLoaderOptions -> unit)
      * (unit -> unit)
   = "useQueryLoader"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 type nonrec ('queryRef, 'variables) loaderTuple =
   'queryRef option
@@ -91,7 +91,7 @@ external usePreloadedQuery :
   -> 'queryRef
   -> 'response
   = "usePreloadedQuery"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (** Combine this with `Query.useLoader` or `YourQueryName_graphql.load()` to use
     a query you've started preloading before rendering. *)
@@ -111,7 +111,7 @@ external fetchQuery :
   -> fetchQueryOptions option
   -> 'response Observable.t
   = "fetchQuery"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (** This fetches the query in a one-off fashion, and returns a `Belt.Result.t`
     in a callback for convenience. Use `Query.fetchPromised` if you need this
@@ -166,7 +166,7 @@ external createOperationDescriptor :
   -> 'variables
   -> operationDescriptor
   = "createOperationDescriptor"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 
 (**Calling with a set of variables will make Relay _disable garbage collection_
    of this query (+ variables) until you explicitly dispose the `Disposable.t`

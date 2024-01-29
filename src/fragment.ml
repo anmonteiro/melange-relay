@@ -5,7 +5,7 @@ external useFragment_ :
   -> 'fragmentRef
   -> 'fragment
   = "useFragment"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (* React hook for getting the data of this fragment. Pass the `fragmentRefs` of
    any object where you've spread your fragment into this and get the fragment
@@ -26,7 +26,7 @@ external useFragmentOpt_ :
   -> 'fragmentRef option
   -> 'fragment Js.Nullable.t
   = "useFragment"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (* A version of `Fragment.use` that'll allow you to pass `option<fragmentRefs>`
    and get `option<'fragmentData>` back. Useful for scenarios where you don't
@@ -43,7 +43,7 @@ external readInlineData_ :
   -> 'fragmentRef
   -> 'fragment
   = "readInlineData"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 let readInlineData ~node ~(convertFragment : 'fragment -> 'fragment) ~fRef =
   readInlineData_ node fRef |. convertFragment
@@ -52,7 +52,7 @@ type refetchableFnOpts =
   { fetchPolicy : string option [@mel.optional]
   ; onComplete : (Js.Exn.t Js.Nullable.t -> unit) option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 let internal_makeRefetchableFnOpts ?fetchPolicy ?onComplete () =
   refetchableFnOpts
@@ -62,7 +62,7 @@ let internal_makeRefetchableFnOpts ?fetchPolicy ?onComplete () =
 
 type nonrec paginationLoadMoreOptions =
   { onComplete : (Js.Exn.t Js.Nullable.t -> unit) option [@mel.optional] }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 type nonrec paginationLoadMoreFn =
   count:int -> ?onComplete:(Js.Exn.t option -> unit) -> unit -> Disposable.t
@@ -113,7 +113,7 @@ external usePaginationFragment_ :
   -> 'fragmentRef
   -> ('fragment, 'refetchVariables) paginationFragmentReturnRaw
   = "usePaginationFragment"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (** React hook for paginating a fragment. Paginating with this hook will _not_
     cause your component to suspend. If you want pagination to trigger suspense,
@@ -166,7 +166,7 @@ external useBlockingPaginationFragment_ :
   -> 'fragmentRef
   -> ('fragment, 'refetchVariables) paginationFragmentReturnRaw
   = "default"
-[@@module "react-relay/lib/relay-hooks/useBlockingPaginationFragment"]
+[@@mel.module "react-relay/lib/relay-hooks/useBlockingPaginationFragment"]
 
 (** Like `Fragment.usePagination`, but calling the pagination function will
     trigger suspense. Useful for all-at-once pagination.*)
@@ -216,7 +216,7 @@ external useRefetchableFragment_ :
   -> 'fragmentRef
   -> 'fragment * ('refetchVariables -> refetchableFnOpts -> Disposable.t)
   = "useRefetchableFragment"
-[@@module "react-relay"]
+[@@mel.module "react-relay"]
 
 (**React hook for using a fragment that you want to refetch. Returns a tuple of
    `(fragmentData, refetchFn)`. ### Refetching and variables You supply a _diff_

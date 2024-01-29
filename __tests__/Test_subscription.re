@@ -116,15 +116,15 @@ let test_subscription = () => {
   let subscriptionFns = ref([||]);
 
   let subscribeToOnNext = nextFn => {
-    let _ = subscriptionFns.contents->(Js.Array2.push(nextFn));
+    let _ = subscriptionFns.contents->(Js.Array.push(~value=nextFn));
 
     () =>
       subscriptionFns.contents =
-        subscriptionFns.contents->(Js.Array2.filter(fn => fn !== nextFn));
+        subscriptionFns.contents->(Js.Array.filter(~f=fn => fn !== nextFn));
   };
 
   let pushNext = next =>
-    subscriptionFns.contents->(Js.Array2.forEach(fn => fn(next)));
+    subscriptionFns.contents->(Js.Array.forEach(~f=fn => fn(next)));
 
   let subscriptionFunction = (_, _, _) =>
     Melange_relay.Observable.make(sink => {

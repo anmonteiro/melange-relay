@@ -11,14 +11,14 @@ type nonrec ('node, 'variables, 'response) subscriptionConfig =
   ; onNext : ('response -> unit) option [@mel.optional]
   ; updater : 'response updaterFn option [@mel.optional]
   }
-[@@deriving abstract]
+[@@deriving jsProperties, getSet]
 
 external requestSubscription_ :
    Environment.t
   -> ('node, 'variables, 'response) subscriptionConfig
   -> Disposable.t
   = "requestSubscription"
-[@@module "relay-runtime"]
+[@@mel.module "relay-runtime"]
 
 let subscribe
     ~node

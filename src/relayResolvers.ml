@@ -5,7 +5,7 @@ external readFragment_ :
   -> 'fragmentRef
   -> 'fragment
   = "readFragment"
-[@@module "relay-runtime/lib/store/ResolverFragments"]
+[@@mel.module "relay-runtime/lib/store/ResolverFragments"]
 
 type nonrec ('fragment, 't) resolver = 'fragment -> 't option
 

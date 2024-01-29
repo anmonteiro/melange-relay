@@ -108,7 +108,7 @@ module Test = {
                       }
                     )
                   )
-                ->(Js.Array2.joinWith(", ")),
+                ->(Js.Array.join(~sep=", ")),
            )}
         </div>
       </div>

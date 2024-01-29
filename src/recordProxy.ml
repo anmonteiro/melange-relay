@@ -11,9 +11,9 @@ let (optArrayOfNullableToOptArrayOfOpt :
 type nonrec t
 
 external copyFieldsFrom : t -> sourceRecord:t -> unit = "copyFieldsFrom"
-[@@send]
+[@@mel.send]
 
-external getDataId : t -> dataId = "getDataID" [@@send]
+external getDataId : t -> dataId = "getDataID" [@@mel.send]
 
 external getLinkedRecord :
    t
@@ -22,7 +22,7 @@ external getLinkedRecord :
   -> unit
   -> t option
   = "getLinkedRecord"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getLinkedRecords :
    t
@@ -30,7 +30,7 @@ external getLinkedRecords :
   -> arguments option
   -> t Js.Nullable.t array option
   = "getLinkedRecords"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 let getLinkedRecords t ~name ?arguments () : t option array option =
   getLinkedRecords t name arguments |. optArrayOfNullableToOptArrayOfOpt
@@ -43,9 +43,9 @@ external getOrCreateLinkedRecord :
   -> unit
   -> t
   = "getOrCreateLinkedRecord"
-[@@send]
+[@@mel.send]
 
-external getType : t -> string = "getType" [@@send]
+external getType : t -> string = "getType" [@@mel.send]
 
 external getValueString :
    t
@@ -54,7 +54,7 @@ external getValueString :
   -> unit
   -> string option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueStringArray :
    t
@@ -63,7 +63,7 @@ external getValueStringArray :
   -> unit
   -> string option array option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueInt :
    t
@@ -72,7 +72,7 @@ external getValueInt :
   -> unit
   -> int option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueIntArray :
    t
@@ -81,7 +81,7 @@ external getValueIntArray :
   -> unit
   -> int option array option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueFloat :
    t
@@ -90,7 +90,7 @@ external getValueFloat :
   -> unit
   -> float option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueFloatArray :
    t
@@ -99,7 +99,7 @@ external getValueFloatArray :
   -> unit
   -> float option array option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueBool :
    t
@@ -108,7 +108,7 @@ external getValueBool :
   -> unit
   -> bool option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external getValueBoolArray :
    t
@@ -117,7 +117,7 @@ external getValueBoolArray :
   -> unit
   -> bool option array option
   = "getValue"
-[@@send] [@@return nullable]
+[@@mel.send] [@@mel.return nullable]
 
 external setLinkedRecord :
    t
@@ -127,27 +127,27 @@ external setLinkedRecord :
   -> unit
   -> t
   = "setLinkedRecord"
-[@@send]
+[@@mel.send]
 
 external setLinkedRecordToUndefined :
    t
-  -> (_[@as {json|undefined|json}])
+  -> (_[@mel.as {json|undefined|json}])
   -> name:string
   -> ?arguments:arguments
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setLinkedRecordToNull :
    t
-  -> (_[@as {json|null|json}])
+  -> (_[@mel.as {json|null|json}])
   -> name:string
   -> ?arguments:arguments
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setLinkedRecords :
    t
@@ -157,47 +157,47 @@ external setLinkedRecords :
   -> unit
   -> t
   = "setLinkedRecords"
-[@@send]
+[@@mel.send]
 
 external setLinkedRecordsToUndefined :
    t
-  -> (_[@as {json|undefined|json}])
+  -> (_[@mel.as {json|undefined|json}])
   -> name:string
   -> ?arguments:arguments
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setLinkedRecordsToNull :
    t
-  -> (_[@as {json|null|json}])
+  -> (_[@mel.as {json|null|json}])
   -> name:string
   -> ?arguments:arguments
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueToUndefined :
    t
-  -> (_[@as {json|undefined|json}])
+  -> (_[@mel.as {json|undefined|json}])
   -> name:string
   -> ?arguments:arguments
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueToNull :
    t
-  -> (_[@as {json|null|json}])
+  -> (_[@mel.as {json|null|json}])
   -> name:string
   -> ?arguments:arguments
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueString :
    t
@@ -207,7 +207,7 @@ external setValueString :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueStringArray :
    t
@@ -217,7 +217,7 @@ external setValueStringArray :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueInt :
    t
@@ -227,7 +227,7 @@ external setValueInt :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueIntArray :
    t
@@ -237,7 +237,7 @@ external setValueIntArray :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueFloat :
    t
@@ -247,7 +247,7 @@ external setValueFloat :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueFloatArray :
    t
@@ -257,7 +257,7 @@ external setValueFloatArray :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueBool :
    t
@@ -267,7 +267,7 @@ external setValueBool :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
 external setValueBoolArray :
    t
@@ -277,6 +277,6 @@ external setValueBoolArray :
   -> unit
   -> t
   = "setValue"
-[@@send]
+[@@mel.send]
 
-external invalidateRecord : t -> unit = "invalidateRecord" [@@send]
+external invalidateRecord : t -> unit = "invalidateRecord" [@@mel.send]
