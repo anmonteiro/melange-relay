@@ -135,7 +135,7 @@ let node: operationType = [%mel.raw {json| {
             },
             "kind": "RelayResolver",
             "storageKey": null,
-            "isOutputType": false
+            "isOutputType": true
           },
           {
             "alias": null,

@@ -166,7 +166,7 @@ external useBlockingPaginationFragment_ :
   -> 'fragmentRef
   -> ('fragment, 'refetchVariables) paginationFragmentReturnRaw
   = "default"
-[@@mel.module "react-relay/lib/relay-hooks/useBlockingPaginationFragment"]
+[@@mel.module "react-relay/lib/relay-hooks/legacy/useBlockingPaginationFragment"]
 
 (** Like `Fragment.usePagination`, but calling the pagination function will
     trigger suspense. Useful for all-at-once pagination.*)
