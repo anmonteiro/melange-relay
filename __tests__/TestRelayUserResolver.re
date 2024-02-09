@@ -1,8 +1,5 @@
 /**
- * @RelayResolver
- *
- * @onType User
- * @fieldName fullName
+ * @RelayResolver User.fullName: String
  * @rootFragment TestRelayUserResolver
  *
  * A users full name.
@@ -21,5 +18,5 @@ module Fragment = [%relay
 
 let default =
   Fragment.makeRelayResolver(user =>
-    [@ns.braces] Some((user.firstName ++ {| |}) ++ user.lastName)
+    Some((user.firstName ++ {| |}) ++ user.lastName)
   );

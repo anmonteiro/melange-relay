@@ -5,7 +5,7 @@ module Types = struct
   [@@@ocaml.warning "-30"]
 
   type fragment = {
-    fullName: TestRelayUserResolver.t option;
+    fullName: string option;
     isOnline: bool option;
   }
 end
