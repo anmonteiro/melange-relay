@@ -1,8 +1,14 @@
+const PERSISTING = Boolean(process.env.ENABLE_PERSISTING);
+
 module.exports = {
   testEnvironment : 'jsdom',
   bail : true,
-  testRegex : '/__tests__/.*-tests.js$',
-  roots : [ '<rootDir>/tests' ],
+  testRegex: PERSISTING
+    ? "/__tests_preloaded__/.*-tests.js$"
+    : "/__tests__/.*-tests.js$",
+  roots: PERSISTING
+    ? ["<rootDir>/__tests_preloaded__"]
+    : ["<rootDir>/__tests__"],
   setupFilesAfterEnv : [
     '<rootDir>/tests/melange-relay/__tests__/jestSetup.js',
   ],
