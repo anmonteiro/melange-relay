@@ -1,6 +1,10 @@
 (* @sourceLoc Test_connections.re *)
 (* @generated *)
 [%%mel.raw "/* @generated */"]
+[%%mel.raw {|
+
+|}]
+
 module Types = struct
   [@@@ocaml.warning "-30"]
 
@@ -25,6 +29,9 @@ module Types = struct
   }
 
 end
+
+
+type queryRef
 
 module Internal = struct
   let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
@@ -59,10 +66,9 @@ module Internal = struct
   let convertWrapRawResponse = convertWrapResponse
   type rawResponseRaw = responseRaw
   let convertRawResponse = convertResponse
+  type 'response rawPreloadToken = {source: 'response Melange_relay.Observable.t Js.Nullable.t}
+  external tokenToRaw: queryRef -> Types.response rawPreloadToken = "%identity"
 end
-
-type queryRef
-
 module Utils = struct
   [@@@ocaml.warning "-33"]
   open Types
@@ -100,6 +106,16 @@ v2 = [
     "kind": "Literal",
     "name": "first",
     "value": 2
+  },
+  {
+    "kind": "Literal",
+    "name": "orderBy",
+    "value": [
+      {
+        "direction": "ASC",
+        "field": "FIRST_NAME"
+      }
+    ]
   },
   {
     "kind": "Literal",
@@ -237,7 +253,8 @@ return {
             "args": (v2/*: any*/),
             "filters": [
               "statuses",
-              "beforeDate"
+              "beforeDate",
+              "orderBy"
             ],
             "handle": "connection",
             "key": "TestConnections_user_friendsConnection",
@@ -263,21 +280,52 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f85d0e2a4fdccf6cc34e34573d26baa1",
+    "cacheID": "fde5cf330e5c3660ff0f11e601c60d42",
     "id": null,
     "metadata": {},
     "name": "TestConnectionsQuery",
     "operationKind": "query",
-    "text": "query TestConnectionsQuery(\n  $beforeDate: Datetime!\n) {\n  loggedInUser {\n    ...TestConnections_user_3xCS8w\n    id\n  }\n}\n\nfragment TestConnections_user_3xCS8w on User {\n  friendsConnection(statuses: [Idle], first: 2, after: \"\", beforeDate: $beforeDate) {\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query TestConnectionsQuery(\n  $beforeDate: Datetime!\n) {\n  loggedInUser {\n    ...TestConnections_user_3xCS8w\n    id\n  }\n}\n\nfragment TestConnections_user_3xCS8w on User {\n  friendsConnection(statuses: [Idle], first: 2, after: \"\", beforeDate: $beforeDate, orderBy: [{direction: ASC, field: FIRST_NAME}]) {\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })() |json}]
 
-include Melange_relay.MakeLoadQuery(struct
-            type variables = Types.variables
-            type loadedQueryRef = queryRef
-            type response = Types.response
-            type node = relayOperationNode
-            let query = node
-            let convertVariables = Internal.convertVariables
-        end)
+let (load :
+    environment:Melange_relay.Environment.t
+    -> variables:Types.variables
+    -> ?fetchPolicy:Melange_relay.FetchPolicy.t
+    -> ?fetchKey:string
+    -> ?networkCacheConfig:Melange_relay.cacheConfig
+    -> unit
+    -> queryRef)
+=
+fun ~environment ~variables ?fetchPolicy ?fetchKey ?networkCacheConfig () ->
+  Melange_relay.loadQuery
+    environment
+    node
+    (variables |. Internal.convertVariables)
+    { fetchKey
+    ; fetchPolicy = fetchPolicy |. Melange_relay.FetchPolicy.map
+    ; networkCacheConfig
+    }
+
+type nonrec 'response rawPreloadToken =
+  { source : 'response Melange_relay.Observable.t Js.Nullable.t }
+
+let queryRefToObservable token =
+  let raw = token |. Internal.tokenToRaw in
+  raw.source |. Js.Nullable.toOption
+
+let queryRefToPromise token =
+  Js.Promise.make (fun ~resolve ~reject:_ ->
+      match token |. queryRefToObservable with
+      | None -> resolve (Error ()) [@u]
+      | Some o ->
+        let open Melange_relay.Observable in
+        let (_ : subscription) =
+          o
+          |. subscribe
+               (makeObserver ~complete:(fun () -> (resolve (Ok ()) [@u])) ())
+        in
+        ())
+

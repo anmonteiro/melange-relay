@@ -1,6 +1,10 @@
 (* @sourceLoc Test_observer.re *)
 (* @generated *)
 [%%mel.raw "/* @generated */"]
+[%%mel.raw {|
+
+|}]
+
 module Types = struct
   [@@@ocaml.warning "-30"]
 
@@ -15,6 +19,9 @@ module Types = struct
   type refetchVariables = unit
   let makeRefetchVariables () = ()
 end
+
+
+type queryRef
 
 module Internal = struct
   let variablesConverter: string Js.Dict.t Js.Dict.t Js.Dict.t = [%mel.raw 
@@ -47,10 +54,9 @@ module Internal = struct
   let convertWrapRawResponse = convertWrapResponse
   type rawResponseRaw = responseRaw
   let convertRawResponse = convertResponse
+  type 'response rawPreloadToken = {source: 'response Melange_relay.Observable.t Js.Nullable.t}
+  external tokenToRaw: queryRef -> Types.response rawPreloadToken = "%identity"
 end
-
-type queryRef
-
 module Utils = struct
   [@@@ocaml.warning "-33"]
   open Types
@@ -110,11 +116,42 @@ return {
 };
 })() |json}]
 
-include Melange_relay.MakeLoadQuery(struct
-            type variables = Types.variables
-            type loadedQueryRef = queryRef
-            type response = Types.response
-            type node = relayOperationNode
-            let query = node
-            let convertVariables = Internal.convertVariables
-        end)
+let (load :
+    environment:Melange_relay.Environment.t
+    -> variables:Types.variables
+    -> ?fetchPolicy:Melange_relay.FetchPolicy.t
+    -> ?fetchKey:string
+    -> ?networkCacheConfig:Melange_relay.cacheConfig
+    -> unit
+    -> queryRef)
+=
+fun ~environment ~variables ?fetchPolicy ?fetchKey ?networkCacheConfig () ->
+  Melange_relay.loadQuery
+    environment
+    node
+    (variables |. Internal.convertVariables)
+    { fetchKey
+    ; fetchPolicy = fetchPolicy |. Melange_relay.FetchPolicy.map
+    ; networkCacheConfig
+    }
+
+type nonrec 'response rawPreloadToken =
+  { source : 'response Melange_relay.Observable.t Js.Nullable.t }
+
+let queryRefToObservable token =
+  let raw = token |. Internal.tokenToRaw in
+  raw.source |. Js.Nullable.toOption
+
+let queryRefToPromise token =
+  Js.Promise.make (fun ~resolve ~reject:_ ->
+      match token |. queryRefToObservable with
+      | None -> resolve (Error ()) [@u]
+      | Some o ->
+        let open Melange_relay.Observable in
+        let (_ : subscription) =
+          o
+          |. subscribe
+               (makeObserver ~complete:(fun () -> (resolve (Ok ()) [@u])) ())
+        in
+        ())
+
