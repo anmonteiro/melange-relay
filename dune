@@ -1,4 +1,4 @@
-(dirs :standard __tests__)
+(dirs :standard __tests__ __tests_preloaded__)
 
 (subdir
  __tests__
@@ -6,6 +6,7 @@
  (include_subdirs unqualified)
  (library
   (name tests)
+  (wrapped false)
   (modes melange)
   (preprocess
    (pps melange.ppx reason-react-ppx melange-relay.ppx))
@@ -16,9 +17,23 @@
    queryMock.js
    (glob_files *-tests.js))))
 
+(subdir
+ __tests_preloaded__
+ (dirs :standard __generated__)
+ (include_subdirs unqualified)
+ (library
+  (name preloaded_tests)
+  (modes melange)
+  (preprocess
+   (pps melange.ppx reason-react-ppx melange-relay.ppx))
+  (libraries reason-react melange-relay melange-fetch melange.belt tests)
+  (melange.compile_flags :standard -w -9-34-61-69)
+  (melange.runtime_deps
+   (glob_files *-tests.js))))
+
 (melange.emit
  (target tests)
- (libraries tests)
+ (libraries tests preloaded_tests)
  (alias meltest)
  (promote (until-clean))
  (module_systems
