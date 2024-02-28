@@ -16,6 +16,32 @@ type enum_OnlineStatus_input = [
 ]
 
 
+type enum_OrderDirection = private [>
+  | `ASC
+  | `DESC
+]
+
+
+type enum_OrderDirection_input = [
+  | `ASC
+  | `DESC
+]
+
+
+type enum_UserOrderField = private [>
+  | `ID
+  | `CREATED_AT
+  | `FIRST_NAME
+]
+
+
+type enum_UserOrderField_input = [
+  | `ID
+  | `CREATED_AT
+  | `FIRST_NAME
+]
+
+
 type enum_RequiredFieldAction = private [>
   | `NONE
   | `LOG
@@ -82,6 +108,16 @@ and input_SomeInput_nullable = {
   datetime: TestsUtils.Datetime.t Js.Null.t option [@mel.optional];
   recursive: input_SomeInput_nullable Js.Null.t option [@mel.optional];
   private_: bool Js.Null.t option [@mel.optional] [@mel.as "private"];
+}
+
+and input_UserOrder = {
+  direction: [`ASC | `DESC];
+  field: [`ID | `CREATED_AT | `FIRST_NAME];
+}
+
+and input_UserOrder_nullable = {
+  direction: [`ASC | `DESC];
+  field: [`ID | `CREATED_AT | `FIRST_NAME];
 }
 
 and input_RecursiveSetOnlineStatusInput = {
@@ -162,6 +198,11 @@ external make_SomeInput:
   ?_private: bool -> 
   unit ->
  input_SomeInput = "" [@@mel.obj]
+
+external make_UserOrder: 
+  direction: [`ASC | `DESC] -> 
+  field: [`ID | `CREATED_AT | `FIRST_NAME] -> 
+ input_UserOrder = "" [@@mel.obj]
 
 external make_RecursiveSetOnlineStatusInput: 
   someValue: TestsUtils.IntString.t -> 

@@ -53,6 +53,22 @@ enum OnlineStatus {
   Offline
 }
 
+enum OrderDirection {
+  ASC
+  DESC
+}
+
+input UserOrder {
+  direction: OrderDirection!
+  field: UserOrderField!
+}
+
+enum UserOrderField {
+  ID
+  CREATED_AT
+  FIRST_NAME
+}
+
 interface HasName {
   name: String!
 }
@@ -85,6 +101,7 @@ type User implements Node {
     last: Int
     objTest: SomeInput
     objTests: [SomeInput]
+    orderBy: [UserOrder!] = [{ direction: ASC, field: FIRST_NAME }]
   ): UserConnection!
   memberOf: [Member]
   memberOfSingular: Member

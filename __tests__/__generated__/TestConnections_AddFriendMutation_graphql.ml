@@ -1,6 +1,10 @@
 (* @sourceLoc Test_connections.re *)
 (* @generated *)
 [%%mel.raw "/* @generated */"]
+[%%mel.raw {|
+
+|}]
+
 module Types = struct
   [@@@ocaml.warning "-30"]
 

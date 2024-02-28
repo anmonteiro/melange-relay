@@ -17,6 +17,7 @@ let fetchQuery: Melange_relay.Network.fetchFunctionPromise =
           ~body=
             Js.Dict.fromList([
               ("query", Js.Json.string(operation.text)),
+              ("id", Js.Json.string(operation.id)),
               ("variables", variables),
             ])
             ->Js.Json.object_

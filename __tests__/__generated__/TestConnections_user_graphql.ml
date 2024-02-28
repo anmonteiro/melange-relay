@@ -43,10 +43,11 @@ let connectionKey = "TestConnections_user_friendsConnection"
   external internal_makeConnectionId: Melange_relay.dataId -> (_ [@mel.as "TestConnections_user_friendsConnection"]) -> 'arguments -> Melange_relay.dataId = "getConnectionID"
 [@@live] [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"]
 
-]let makeConnectionId (connectionParentDataId: Melange_relay.dataId) ?(onlineStatuses: [`Online | `Idle | `Offline] array=[| `Idle |]) ~(beforeDate: TestsUtils.Datetime.t) () =
+]let makeConnectionId (connectionParentDataId: Melange_relay.dataId) ?(onlineStatuses: [`Online | `Idle | `Offline] array=[| `Idle |]) ~(beforeDate: TestsUtils.Datetime.t) ?(orderBy: RelaySchemaAssets_graphql.input_UserOrder array=(Obj.magic [| [%mel.obj {direction = `ASC; field = `FIRST_NAME}] |])) () =
   let onlineStatuses = Some onlineStatuses in
   let beforeDate = Some (TestsUtils.Datetime.serialize beforeDate) in
-  let args = [%mel.obj {statuses= onlineStatuses; beforeDate= beforeDate}] in
+  let orderBy = Some orderBy in
+  let args = [%mel.obj {statuses= onlineStatuses; beforeDate= beforeDate; orderBy= orderBy}] in
   internal_makeConnectionId connectionParentDataId args
 module Utils = struct
   [@@@ocaml.warning "-33"]
@@ -98,6 +99,16 @@ let node: operationType = [%mel.raw {json| {
       "name": "onlineStatuses"
     },
     {
+      "defaultValue": [
+        {
+          "direction": "ASC",
+          "field": "FIRST_NAME"
+        }
+      ],
+      "kind": "LocalArgument",
+      "name": "orderBy"
+    },
+    {
       "defaultValue": true,
       "kind": "LocalArgument",
       "name": "test"
@@ -130,6 +141,11 @@ let node: operationType = [%mel.raw {json| {
               "kind": "Variable",
               "name": "beforeDate",
               "variableName": "beforeDate"
+            },
+            {
+              "kind": "Variable",
+              "name": "orderBy",
+              "variableName": "orderBy"
             },
             {
               "kind": "Variable",
