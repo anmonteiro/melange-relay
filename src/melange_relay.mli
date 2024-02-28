@@ -1042,6 +1042,21 @@ val useEnvironmentFromContext : unit -> Environment.t
 exception Mutation_failed of mutationError array
 (** An exception detailing that a mutation failed.*)
 
+type nonrec loadQueryConfig =
+  { fetchKey : string option
+  ; fetchPolicy : string option
+  ; networkCacheConfig : cacheConfig option
+  }
+
+external loadQuery :
+   Environment.t
+  -> 'a queryNode
+  -> 'variables
+  -> loadQueryConfig
+  -> 'queryResponse
+  = "loadQuery"
+[@@mel.module "react-relay"]
+
 external commitLocalUpdate :
    environment:Environment.t
   -> updater:(RecordSourceSelectorProxy.t -> unit)
@@ -1065,30 +1080,6 @@ type nonrec fetchQueryOptions =
   }
 (** Options valid when fetching a query outside of React's render method (like
     when using `Query.fetch`).*)
-
-module type MakeLoadQueryConfig = sig
-  type nonrec variables
-  type nonrec loadedQueryRef
-  type nonrec response
-  type nonrec node
-
-  val query : node queryNode
-  val convertVariables : variables -> variables
-end
-
-module MakeLoadQuery : functor (C : MakeLoadQueryConfig) -> sig
-  val load :
-     environment:Environment.t
-    -> variables:C.variables
-    -> ?fetchPolicy:FetchPolicy.t
-    -> ?fetchKey:string
-    -> ?networkCacheConfig:cacheConfig
-    -> unit
-    -> C.loadedQueryRef
-
-  val queryRefToObservable : C.loadedQueryRef -> C.response Observable.t option
-  val queryRefToPromise : C.loadedQueryRef -> (unit, unit) result Js.Promise.t
-end
 
 module Mutation : sig
   type nonrec 'response updaterFn =
