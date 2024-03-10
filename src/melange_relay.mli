@@ -115,7 +115,8 @@ type nonrec featureFlags =
         [@mel.as "ENABLE_LOAD_QUERY_REQUEST_DEDUPING"]
   ; mutable enableDoNotWrapLiveQuery : bool
         [@mel.as "ENABLE_DO_NOT_WRAP_LIVE_QUERY"]
-  ; mutable enableNotifySubscription : bool [@mel.as "ENABLE_NOTIFY_SUBSCRIPTION"]
+  ; mutable enableNotifySubscription : bool
+        [@mel.as "ENABLE_NOTIFY_SUBSCRIPTION"]
   ; mutable enableContainersSubscribeOnCommit : bool
         [@mel.as "ENABLE_CONTAINERS_SUBSCRIBE_ON_COMMIT"]
   ; mutable enableQueryRendererOffscreenSupport : bool
@@ -662,7 +663,9 @@ module ConnectionHandler : sig
     -> unit
     -> RecordProxy.t option
     = "getConnection"
-  [@@mel.module "relay-runtime"] [@@mel.scope "ConnectionHandler"] [@@mel.return nullable]
+  [@@mel.module "relay-runtime"]
+  [@@mel.scope "ConnectionHandler"]
+  [@@mel.return nullable]
   (** For a `RecordProxy`, returns the `RecordProxy` that is at the connection
       config provided.*)
 
@@ -758,10 +761,10 @@ module Observable : sig
   (** An observer of the observable.*)
 
   external makeObserver :
-     ?start:((subscription[@mel.uncurry]) -> unit)
-    -> ?next:(('response[@mel.uncurry]) -> unit)
-    -> ?error:((Js.Exn.t[@mel.uncurry]) -> unit)
-    -> ?complete:((unit[@mel.uncurry]) -> unit)
+     ?start:(subscription -> unit)
+    -> ?next:('response -> unit)
+    -> ?error:(Js.Exn.t -> unit)
+    -> ?complete:(unit -> unit)
     -> ?unsubscribe:(subscription -> unit)
     -> unit
     -> 'response observer

@@ -15,11 +15,11 @@ type nonrec 'response sink =
 type nonrec 'response observer
 
 external makeObserver :
-   ?start:((subscription[@mel.uncurry]) -> unit)
-  -> ?next:(('response[@mel.uncurry]) -> unit)
-  -> ?error:((Js.Exn.t[@mel.uncurry]) -> unit)
-  -> ?complete:((unit[@mel.uncurry]) -> unit)
-  -> ?unsubscribe:((subscription[@mel.uncurry]) -> unit)
+   ?start:(subscription -> unit)
+  -> ?next:('response -> unit)
+  -> ?error:(Js.Exn.t -> unit)
+  -> ?complete:(unit -> unit)
+  -> ?unsubscribe:(subscription -> unit)
   -> unit
   -> 'response observer
   = ""
