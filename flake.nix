@@ -3,25 +3,15 @@
 
   inputs.nix-filter.url = "github:numtide/nix-filter";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixpkgs = {
-    url = "github:nix-ocaml/nix-overlays";
-    inputs.flake-utils.follows = "flake-utils";
-  };
-  inputs.melange = {
-    url = "github:melange-re/melange";
-    inputs.nix-filter.follows = "nix-filter";
-    inputs.flake-utils.follows = "flake-utils";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  inputs.nixpkgs.url = "github:nix-ocaml/nix-overlays";
 
-  outputs = { self, nixpkgs, flake-utils, nix-filter, melange }:
+  outputs = { self, nixpkgs, flake-utils, nix-filter }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
           (self: super: {
-            ocamlPackages = super.ocaml-ng.ocamlPackages_5_1;
+            ocamlPackages = super.ocaml-ng.ocamlPackages_5_2;
           })
-          melange.overlays.default
         ];
         inherit (pkgs) nodejs_latest lib stdenv darwin;
       in
@@ -55,6 +45,7 @@
             yarn
             cargo
             nodejs_latest
+            openssl-oc
             rustfmt
           ] ++ (with pkgs.ocamlPackages; [
             ocamlformat
